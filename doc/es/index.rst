@@ -9,3 +9,6 @@ Envío de albaranes/entregas a la empresa de mensajería Seur.
 Las etiquetas para el envío por defecto son en fichero texto que deberá enviar
 a la impresora Zebra proporcionada por Seur. También dispone de la opción
 PDF en la API del transportista de Seur.
+
+Seur no dispone la opción de volver a descargar de la etiqueta. La etiqueta
+se ofrece en el momento de alta el envío a Seur.
