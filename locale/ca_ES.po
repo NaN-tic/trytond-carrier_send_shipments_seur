@@ -1,0 +1,23 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:carrier.api,seur_agency:"
+msgid "Agency"
+msgstr "Agencia"
+
+msgctxt "help:carrier.api,seur_agency:"
+msgid "Seur Agency"
+msgstr "Seur Agencia"
+
+msgctxt "wizard_button:carrier.send.shipments,result,end:"
+msgid "Close"
+msgstr "Tanca"
+
+msgctxt "wizard_button:carrier.send.shipments,start,end:"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "wizard_button:carrier.send.shipments,start,send:"
+msgid "Send"
+msgstr "Envia"
