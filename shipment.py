@@ -68,7 +68,7 @@ class ShipmentOut:
                 #~ data['clave_portes'] = 'F'
                 if shipment.carrier_cashondelivery:
                     data['clave_reembolso'] = 'F' # F: Facturacion
-                    data['valor_reembolso'] = price_ondelivery
+                    data['valor_reembolso'] = str(price_ondelivery)
                 data['cliente_nombre'] = unaccent(shipment.customer.name)
                 data['cliente_direccion'] = unaccent(shipment.delivery_address.street)
                 #~ data['cliente_tipovia'] = 'CL'
