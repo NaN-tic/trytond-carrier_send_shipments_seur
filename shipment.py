@@ -4,7 +4,7 @@
 from trytond.pool import Pool, PoolMeta
 from trytond.transaction import Transaction
 from seur.picking import Picking
-from trytond.modules.carrier_send_shipments.tools import unaccent
+from trytond.modules.carrier_send_shipments.tools import unaccent, unspaces
 from base64 import decodestring
 import logging
 import tempfile
@@ -80,7 +80,7 @@ class ShipmentOut:
                 data['cliente_poblacion'] = unaccent(shipment.delivery_address.city)
                 data['cliente_cpostal'] = shipment.delivery_address.zip
                 data['cliente_pais'] = shipment.delivery_address.country.code
-                data['cliente_telefono'] = shipment.delivery_address.phone or ''
+                data['cliente_telefono'] = unspaces(shipment.delivery_address.phone or shipment.company.party.phone)
                 data['cliente_atencion'] = unaccent((shipment.delivery_address.name
                         or shipment.customer.name))
 
