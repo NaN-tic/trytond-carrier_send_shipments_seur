@@ -124,7 +124,7 @@ class ShipmentOut:
         return references, labels, errors
 
     @classmethod
-    def print_labels_seur(cls, shipments, api):
+    def print_labels_seur(cls, api, shipments):
         '''
         Get labels from shipments out from Seur
         Not available labels from Seur API. Not return labels
