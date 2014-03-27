@@ -2,13 +2,73 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "field:carrier.api,seur_agency:"
-msgid "Agency"
-msgstr "Agencia"
+msgctxt "field:carrier.api,seur_ccc:"
+msgid "CCC"
+msgstr "CCC"
 
-msgctxt "help:carrier.api,seur_agency:"
-msgid "Seur Agency"
-msgstr "Seur Agencia"
+msgctxt "field:carrier.api,seur_ci:"
+msgid "CI"
+msgstr "CI"
+
+msgctxt "field:carrier.api,seur_ecb_code:"
+msgid "ECB Code"
+msgstr "Codi ECB"
+
+msgctxt "field:carrier.api,seur_franchise:"
+msgid "Franchise"
+msgstr "Franquícia"
+
+msgctxt "field:carrier.api,seur_pdf:"
+msgid "PDF"
+msgstr "PDF"
+
+msgctxt "field:carrier.api,seur_printer:"
+msgid "Printer"
+msgstr "Impressora"
+
+msgctxt "field:carrier.api,seur_printer_model:"
+msgid "Printer Model"
+msgstr "Model impressora"
+
+msgctxt "field:carrier.api,seur_seurid:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "help:carrier.api,seur_ccc:"
+msgid "Seur Account Code (ccc)"
+msgstr "Codi compte Seur (ccc)"
+
+msgctxt "help:carrier.api,seur_ci:"
+msgid "Seur Customer Code (ci)"
+msgstr "Codi client Seur (ci)"
+
+msgctxt "help:carrier.api,seur_ecb_code:"
+msgid "Seur ECB Code"
+msgstr "Codi ECB Seur"
+
+msgctxt "help:carrier.api,seur_franchise:"
+msgid "Seur Franchise code"
+msgstr "Codi franquícia"
+
+msgctxt "help:carrier.api,seur_pdf:"
+msgid "PDF Label"
+msgstr "Etiqueta PDF"
+
+msgctxt "help:carrier.api,seur_printer:"
+msgid "Seur Printer"
+msgstr "Impressora Seur"
+
+msgctxt "help:carrier.api,seur_printer_model:"
+msgid "Seur Printer Model"
+msgstr "Model impressora Seur"
+
+msgctxt "help:carrier.api,seur_seurid:"
+msgid "Seur Description code"
+msgstr "Codi descripció Seur"
+
+msgctxt "view:carrier.api:"
+msgid "Seur"
+msgstr "Seur"
 
 msgctxt "wizard_button:carrier.send.shipments,result,end:"
 msgid "Close"
