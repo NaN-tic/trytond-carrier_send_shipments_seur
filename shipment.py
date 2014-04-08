@@ -74,6 +74,9 @@ class ShipmentOut:
                         continue
                     data['clave_reembolso'] = 'F' # F: Facturacion
                     data['valor_reembolso'] = str(price_ondelivery).replace(".", ",")
+                else:
+                    data['clave_reembolso'] = ' '
+                    data['valor_reembolso'] = '0'
                 data['cliente_nombre'] = unaccent(shipment.customer.name)
                 data['cliente_direccion'] = unaccent(shipment.delivery_address.street)
                 #~ data['cliente_tipovia'] = 'CL'
