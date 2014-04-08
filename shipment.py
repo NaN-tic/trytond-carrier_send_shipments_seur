@@ -44,7 +44,7 @@ class ShipmentOut:
 
                 notes = ''
                 if shipment.carrier_notes:
-                    notes = CarrierApi.carrier_unaccent(shipment.carrier_notes)
+                    notes = shipment.carrier_notes
 
                 packages = shipment.number_packages
                 if packages == 0:
@@ -62,7 +62,7 @@ class ShipmentOut:
                 data['product'] = '2'
                 data['total_bultos'] = packages
                 #~ data['total_kilos'] = 
-                data['observaciones'] = notes
+                data['observaciones'] = unaccent(notes)
                 data['referencia_expedicion'] = shipment.code
                 data['ref_bulto'] = shipment.code
                 #~ data['clave_portes'] = 'F'
