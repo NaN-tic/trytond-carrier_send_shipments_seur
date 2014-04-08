@@ -67,6 +67,11 @@ class ShipmentOut:
                 data['ref_bulto'] = shipment.code
                 #~ data['clave_portes'] = 'F'
                 if shipment.carrier_cashondelivery:
+                    if not price_ondelivery:
+                        message = 'Shipment %s not have price and send ' \
+                                'cashondelivery' % (shipment.code)
+                        errors.append(message)
+                        continue
                     data['clave_reembolso'] = 'F' # F: Facturacion
                     data['valor_reembolso'] = str(price_ondelivery).replace(".", ",")
                 data['cliente_nombre'] = unaccent(shipment.customer.name)
