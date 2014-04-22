@@ -73,6 +73,10 @@ class ShipmentOut:
                 else:
                     data['clave_reembolso'] = ' '
                     data['valor_reembolso'] = '0'
+                if api.weight and getattr(shipment, 'weight_func'):
+                    weight = str(shipment.weight_func)
+                    data['total_kilos'] = weight
+                    data['peso_bulto'] = weight
                 data['cliente_nombre'] = unaccent(shipment.customer.name)
                 data['cliente_direccion'] = unaccent(shipment.delivery_address.street)
                 #~ data['cliente_tipovia'] = 'CL'
@@ -84,6 +88,11 @@ class ShipmentOut:
                 data['cliente_poblacion'] = unaccent(shipment.delivery_address.city)
                 data['cliente_cpostal'] = shipment.delivery_address.zip
                 data['cliente_pais'] = shipment.delivery_address.country.code
+                if shipment.customer.email:
+                    if shipment.delivery_address.email:
+                        data['cliente_email'] = shipment.delivery_address.email
+                    else:
+                        data['cliente_email'] = shipment.customer.email
                 data['cliente_telefono'] = unspaces(ShipmentOut.get_phone_shipment_out(shipment))
                 data['cliente_atencion'] = unaccent((shipment.delivery_address.name
                         or shipment.customer.name))
