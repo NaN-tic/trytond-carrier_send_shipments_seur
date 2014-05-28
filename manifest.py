@@ -4,12 +4,12 @@
 from seur import Picking
 from trytond.pool import PoolMeta
 
-__all__ = ['StockManifest']
+__all__ = ['CarrierManifest']
 __metaclass__ = PoolMeta
 
 
-class StockManifest:
-    __name__ = 'stock.manifest'
+class CarrierManifest:
+    __name__ = 'carrier.manifest'
 
     def get_manifest_seur(self, api, from_date, to_date):
         context = {}
