@@ -51,13 +51,39 @@ class ShipmentOut:
                 if packages == 0:
                     packages = 1
 
+                customer_city = unaccent(shipment.delivery_address.city)
+                customer_zip = shipment.delivery_address.zip
+
+                # change customer city to seur city because seur required
+                # city equal in their API
+                seur_customer_city = customer_city
+                seur_cities = picking_api.zip(customer_zip)
+                if seur_cities:
+                    seur_customer_city = seur_cities[0]['NOM_POBLACION']
+                for option in seur_cities:
+                    if option['NOM_POBLACION'] == customer_city.upper():
+                        seur_customer_city = option['NOM_POBLACION']
+                        break
+
+                notes = '%(name)s\n' \
+                    '%(street)s\n' \
+                    '%(zip)s %(city)s - %(country)s\n' \
+                    '%(notes)s' % {
+                        'name': unaccent(shipment.customer.name),
+                        'street': unaccent(shipment.delivery_address.street),
+                        'zip': customer_zip,
+                        'city': customer_city,
+                        'country': shipment.delivery_address.country.code,
+                        'notes': unaccent(notes),
+                        }
+
                 data = {}
                 data['servicio'] = str(service.code)
                 data['product'] = '2'
                 data['total_bultos'] = packages
                 if api.weight and getattr(shipment, 'weight_func'):
                     data['total_kilos'] = str(shipment.weight_func)
-                data['observaciones'] = unaccent(notes)
+                data['observaciones'] = notes
                 data['referencia_expedicion'] = shipment.code
                 data['ref_bulto'] = shipment.code
                 data['clave_portes'] = 'F'
@@ -85,8 +111,8 @@ class ShipmentOut:
                 #~ data['cliente_escalera'] = 'A'
                 #~ data['cliente_piso'] = '3'
                 #~ data['cliente_puerta'] = '2'
-                data['cliente_poblacion'] = unaccent(shipment.delivery_address.city)
-                data['cliente_cpostal'] = shipment.delivery_address.zip
+                data['cliente_poblacion'] = seur_customer_city
+                data['cliente_cpostal'] = customer_zip
                 data['cliente_pais'] = shipment.delivery_address.country.code
                 if shipment.customer.email:
                     if shipment.delivery_address.email:
