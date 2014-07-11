@@ -65,16 +65,14 @@ class ShipmentOut:
                         seur_customer_city = option['NOM_POBLACION']
                         break
 
-                notes = '%(name)s\n' \
-                    '%(street)s\n' \
-                    '%(zip)s %(city)s - %(country)s\n' \
-                    '%(notes)s' % {
+                notes = '%(notes)s' \
+                    '%(name)s. %(street)s. %(zip)s %(city)s - %(country)s\n' % {
+                        'notes': unaccent(notes),
                         'name': unaccent(shipment.customer.name),
                         'street': unaccent(shipment.delivery_address.street),
                         'zip': customer_zip,
                         'city': customer_city,
                         'country': shipment.delivery_address.country.code,
-                        'notes': unaccent(notes),
                         }
 
                 data = {}
