@@ -79,7 +79,7 @@ class ShipmentOut:
                 data['servicio'] = str(service.code)
                 data['product'] = '2'
                 data['total_bultos'] = packages
-                if api.weight and getattr(shipment, 'weight_func'):
+                if api.weight and hasattr(shipment, 'weight_func'):
                     data['total_kilos'] = str(shipment.weight_func)
                 data['observaciones'] = notes
                 data['referencia_expedicion'] = shipment.code
