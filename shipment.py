@@ -99,6 +99,8 @@ class ShipmentOut:
                     data['valor_reembolso'] = '0'
                 if api.weight and getattr(shipment, 'weight_func'):
                     weight = str(shipment.weight_func)
+                    if weight == '0.0':
+                        weight = '1'
                     data['total_kilos'] = weight
                     data['peso_bulto'] = weight
                 data['cliente_nombre'] = unaccent(shipment.customer.name)
