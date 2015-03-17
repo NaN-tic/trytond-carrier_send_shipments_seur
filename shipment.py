@@ -42,6 +42,11 @@ class ShipmentOut:
                 api.seur_ci, api.seur_ccc, seur_context) as picking_api:
             for shipment in shipments:
                 service = shipment.carrier_service or default_service
+                if not service:
+                    message = 'Add %s service or configure a default API Seur service.' % (shipment.code)
+                    errors.append(message)
+                    logging.getLogger('seur').error(message)
+                    continue
 
                 notes = ''
                 if shipment.carrier_notes:
