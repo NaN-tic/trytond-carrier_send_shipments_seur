@@ -16,6 +16,89 @@ __metaclass__ = PoolMeta
 class ShipmentOut:
     __name__ = 'stock.shipment.out'
 
+    @staticmethod
+    def seur_picking_data(shipment, service, price=None, seur_cities=[], weight=False):
+        '''
+        Seur Picking Data
+        :param shipment: obj
+        :param service: str
+        :param price: string
+        :param seur_cities: list
+        :param weight: bol
+        Return data
+        '''
+        notes = ''
+        if shipment.carrier_notes:
+            notes = shipment.carrier_notes
+
+        packages = shipment.number_packages
+        if not packages or packages == 0:
+            packages = 1
+
+        customer_city = unaccent(shipment.delivery_address.city)
+        customer_zip = shipment.delivery_address.zip
+
+        # change customer city to seur city because seur required
+        # city equal in their API
+        seur_customer_city = customer_city
+        if seur_cities:
+            seur_customer_city = seur_cities[0]['NOM_POBLACION']
+        for option in seur_cities:
+            if option['NOM_POBLACION'] == customer_city.upper():
+                seur_customer_city = option['NOM_POBLACION']
+                break
+
+        notes = '%(notes)s' \
+            '%(name)s. %(street)s. %(zip)s %(city)s - %(country)s\n' % {
+                'notes': unaccent(notes),
+                'name': unaccent(shipment.customer.name),
+                'street': unaccent(shipment.delivery_address.street),
+                'zip': customer_zip,
+                'city': customer_city,
+                'country': shipment.delivery_address.country.code,
+                }
+
+        data = {}
+        data['servicio'] = str(service.code)
+        data['product'] = '2'
+        data['total_bultos'] = packages
+        data['observaciones'] = notes
+        data['referencia_expedicion'] = shipment.code
+        data['ref_bulto'] = shipment.code
+        data['clave_portes'] = 'F'
+        if shipment.carrier_cashondelivery and price:
+            data['clave_reembolso'] = 'F' # F: Facturacion
+            data['valor_reembolso'] = str(price)
+        else:
+            data['clave_reembolso'] = ' '
+            data['valor_reembolso'] = '0'
+        if weight and getattr(shipment, 'weight_func'):
+            weight = str(shipment.weight_func)
+            if weight == '0.0':
+                weight = '1'
+            data['total_kilos'] = weight
+            data['peso_bulto'] = weight
+        data['cliente_nombre'] = unaccent(shipment.customer.name)
+        data['cliente_direccion'] = unaccent(shipment.delivery_address.street)
+        #~ data['cliente_tipovia'] = 'CL'
+        #~ data['cliente_tnumvia'] = 'N'
+        #~ data['cliente_numvia'] = '93'
+        #~ data['cliente_escalera'] = 'A'
+        #~ data['cliente_piso'] = '3'
+        #~ data['cliente_puerta'] = '2'
+        data['cliente_poblacion'] = seur_customer_city
+        data['cliente_cpostal'] = customer_zip
+        data['cliente_pais'] = shipment.delivery_address.country.code
+        if shipment.customer.email:
+            if shipment.delivery_address.email:
+                data['cliente_email'] = shipment.delivery_address.email
+            else:
+                data['cliente_email'] = shipment.customer.email
+        data['cliente_telefono'] = unspaces(shipment.get_phone_shipment_out(shipment))
+        data['cliente_atencion'] = unaccent((shipment.delivery_address.name
+                or shipment.customer.name))
+        return data
+
     @classmethod
     def send_seur(self, api, shipments):
         '''
@@ -48,87 +131,24 @@ class ShipmentOut:
                     logging.getLogger('seur').error(message)
                     continue
 
-                notes = ''
-                if shipment.carrier_notes:
-                    notes = shipment.carrier_notes
+                if not shipment.delivery_address.country:
+                    message = 'Add %s a country.' % (shipment.code)
+                    errors.append(message)
+                    logging.getLogger('seur').error(message)
+                    continue
 
-                packages = shipment.number_packages
-                if not packages or packages == 0:
-                    packages = 1
-
-                customer_city = unaccent(shipment.delivery_address.city)
-                customer_zip = shipment.delivery_address.zip
-
-                # change customer city to seur city because seur required
-                # city equal in their API
-                seur_customer_city = customer_city
-                seur_cities = picking_api.zip(customer_zip)
-                if seur_cities:
-                    seur_customer_city = seur_cities[0]['NOM_POBLACION']
-                for option in seur_cities:
-                    if option['NOM_POBLACION'] == customer_city.upper():
-                        seur_customer_city = option['NOM_POBLACION']
-                        break
-
-                notes = '%(notes)s' \
-                    '%(name)s. %(street)s. %(zip)s %(city)s - %(country)s\n' % {
-                        'notes': unaccent(notes),
-                        'name': unaccent(shipment.customer.name),
-                        'street': unaccent(shipment.delivery_address.street),
-                        'zip': customer_zip,
-                        'city': customer_city,
-                        'country': shipment.delivery_address.country.code,
-                        }
-
-                data = {}
-                data['servicio'] = str(service.code)
-                data['product'] = '2'
-                data['total_bultos'] = packages
-                if api.weight and hasattr(shipment, 'weight_func'):
-                    data['total_kilos'] = str(shipment.weight_func)
-                data['observaciones'] = notes
-                data['referencia_expedicion'] = shipment.code
-                data['ref_bulto'] = shipment.code
-                data['clave_portes'] = 'F'
+                price = None
                 if shipment.carrier_cashondelivery:
-                    price_ondelivery = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
-                    if not price_ondelivery:
+                    price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
+                    if not price:
                         message = 'Shipment %s not have price and send ' \
                                 'cashondelivery' % (shipment.code)
                         errors.append(message)
                         continue
-                    data['clave_reembolso'] = 'F' # F: Facturacion
-                    data['valor_reembolso'] = str(price_ondelivery)
-                else:
-                    data['clave_reembolso'] = ' '
-                    data['valor_reembolso'] = '0'
-                if api.weight and getattr(shipment, 'weight_func'):
-                    weight = str(shipment.weight_func)
-                    if weight == '0.0':
-                        weight = '1'
-                    data['total_kilos'] = weight
-                    data['peso_bulto'] = weight
-                data['cliente_nombre'] = unaccent(shipment.customer.name)
-                data['cliente_direccion'] = unaccent(shipment.delivery_address.street)
-                #~ data['cliente_tipovia'] = 'CL'
-                #~ data['cliente_tnumvia'] = 'N'
-                #~ data['cliente_numvia'] = '93'
-                #~ data['cliente_escalera'] = 'A'
-                #~ data['cliente_piso'] = '3'
-                #~ data['cliente_puerta'] = '2'
-                data['cliente_poblacion'] = seur_customer_city
-                data['cliente_cpostal'] = customer_zip
-                data['cliente_pais'] = shipment.delivery_address.country.code
-                if shipment.customer.email:
-                    if shipment.delivery_address.email:
-                        data['cliente_email'] = shipment.delivery_address.email
-                    else:
-                        data['cliente_email'] = shipment.customer.email
-                data['cliente_telefono'] = unspaces(ShipmentOut.get_phone_shipment_out(shipment))
-                data['cliente_atencion'] = unaccent((shipment.delivery_address.name
-                        or shipment.customer.name))
 
-                # Send picking data to carrier
+                customer_zip = shipment.delivery_address.zip
+                seur_cities = picking_api.zip(customer_zip)
+                data = self.seur_picking_data(shipment, service, price, seur_cities, api.weight)
                 reference, label, error = picking_api.create(data)
 
                 if reference:
@@ -174,10 +194,72 @@ class ShipmentOut:
         return references, labels, errors
 
     @classmethod
-    def print_labels_seur(cls, api, shipments):
+    def print_labels_seur(self, api, shipments):
         '''
         Get labels from shipments out from Seur
         Not available labels from Seur API. Not return labels
         '''
+        pool = Pool()
+        CarrierApi = pool.get('carrier.api')
+        ShipmentOut = pool.get('stock.shipment.out')
+
+        default_service = CarrierApi.get_default_carrier_service(api)
+        dbname = Transaction().cursor.dbname
+
         labels = []
+        errors = []
+
+        seur_context = {}
+        if api.seur_pdf:
+            seur_context['pdf'] = True
+        with Picking(api.username, api.password, api.vat, api.seur_franchise, api.seur_seurid, \
+                api.seur_ci, api.seur_ccc, seur_context) as picking_api:
+            for shipment in shipments:
+                service = shipment.carrier_service or default_service
+                if not service:
+                    message = 'Add %s service or configure a default API Seur service.' % (shipment.code)
+                    errors.append(message)
+                    logging.getLogger('seur').error(message)
+                    continue
+
+                if not shipment.delivery_address.country:
+                    message = 'Add %s a country.' % (shipment.code)
+                    errors.append(message)
+                    logging.getLogger('seur').error(message)
+                    continue
+
+                price = None
+                if shipment.carrier_cashondelivery:
+                    price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
+                    if not price:
+                        message = 'Shipment %s not have price and send ' \
+                                'cashondelivery' % (shipment.code)
+                        errors.append(message)
+                        continue
+
+                customer_zip = shipment.delivery_address.zip
+                seur_cities = picking_api.zip(customer_zip)
+                data = self.seur_picking_data(shipment, service, price, seur_cities, api.weight)
+                label = picking_api.label(data)
+
+                if label:
+                    if api.seur_pdf:
+                        with tempfile.NamedTemporaryFile(
+                                prefix='%s-seur-%s-' % (dbname, shipment.carrier_tracking_ref),
+                                suffix='.pdf', delete=False) as temp:
+                            temp.write(decodestring(label))
+                    else:
+                        with tempfile.NamedTemporaryFile(
+                                prefix='%s-seur-%s-' % (dbname, shipment.carrier_tracking_ref),
+                                suffix='.txt', delete=False) as temp:
+                            temp.write(label)
+                    logging.getLogger('seur').info(
+                        'Generated tmp label %s' % (temp.name))
+                    temp.close()
+                    labels.append(temp.name)
+                else:
+                    message = 'Not label %s shipment available from Seur.' % (shipment.code)
+                    errors.append(message)
+                    logging.getLogger('seur').error(message)
+
         return labels
