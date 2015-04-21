@@ -28,6 +28,9 @@ class CarrierManifest:
                 )
             manifest_file = picking_api.manifiesto(data)
 
-        manifiest = decodestring(manifest_file)
-        file_name = '%s-manifest-seur.pdf' % dbname
-        return manifiest, file_name
+        if manifest_file:
+            manifiest = decodestring(manifest_file)
+            file_name = '%s-manifest-seur.pdf' % dbname
+            return (manifiest, file_name)
+        else:
+            return
