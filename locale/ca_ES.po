@@ -2,6 +2,34 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:stock.shipment.out:"
+msgid "Add country in shipment \"%(name)s\" delivery address"
+msgstr "Afegeix un pais en l'albarà \"%(name)s\" en l'adreça d'enviament."
+
+msgctxt "error:stock.shipment.out:"
+msgid "Not available \"%(name)s\" label from Seur"
+msgstr "No està disponible l'etiqueta \"%(name)s\" de Seur."
+
+msgctxt "error:stock.shipment.out:"
+msgid "Not send shipment %(name)s"
+msgstr "No s'ha enviat l'albarà %(name)s"
+
+msgctxt "error:stock.shipment.out:"
+msgid "Not send shipment %(name)s. %(error)s"
+msgstr "No s'ha enviat l'albarà %(name)s. %(error)s"
+
+msgctxt "error:stock.shipment.out:"
+msgid "Select a service or default service in Seur API"
+msgstr "Selecciona un servei o un servei per defecte a la API de Seur."
+
+msgctxt "error:stock.shipment.out:"
+msgid "Seur not accept zip \"%(zip)s\""
+msgstr "Seur no accepta el codi postal \"%(zip)s\"."
+
+msgctxt "error:stock.shipment.out:"
+msgid "Shipment \"%(name)s\" not have price and send cashondelivery"
+msgstr "L'albarà \"%(name)s\" no diposa de preus i contrarembolsament."
+
 msgctxt "field:carrier.api,seur_ccc:"
 msgid "CCC"
 msgstr "CCC"

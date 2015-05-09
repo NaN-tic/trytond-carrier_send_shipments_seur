@@ -2,6 +2,34 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:stock.shipment.out:"
+msgid "Add country in shipment \"%(name)s\" delivery address"
+msgstr "Añade un país en el albarán \"%(name)s\" en la dirección de envío."
+
+msgctxt "error:stock.shipment.out:"
+msgid "Not available \"%(name)s\" label from Seur"
+msgstr "No se dispone la etiqueta \"%(name)s\" de Seur"
+
+msgctxt "error:stock.shipment.out:"
+msgid "Not send shipment %(name)s"
+msgstr "No se ha enviado el albarán %(name)s"
+
+msgctxt "error:stock.shipment.out:"
+msgid "Not send shipment %(name)s. %(error)s"
+msgstr "No se ha enviado el albarán %(name)s. %(error)s"
+
+msgctxt "error:stock.shipment.out:"
+msgid "Select a service or default service in Seur API"
+msgstr "Seleccione un servicio o un servicio por defecto en la API de Seur"
+
+msgctxt "error:stock.shipment.out:"
+msgid "Seur not accept zip \"%(zip)s\""
+msgstr "Seur no accepta el código postal \"%(zip)s\""
+
+msgctxt "error:stock.shipment.out:"
+msgid "Shipment \"%(name)s\" not have price and send cashondelivery"
+msgstr "El albarán \"%(name)s\" no dispone de precio y contrarembolso."
+
 msgctxt "field:carrier.api,seur_ccc:"
 msgid "CCC"
 msgstr "CCC"
