@@ -16,6 +16,20 @@ __metaclass__ = PoolMeta
 class ShipmentOut:
     __name__ = 'stock.shipment.out'
 
+    @classmethod
+    def __setup__(cls):
+        super(ShipmentOut, cls).__setup__()
+        cls._error_messages.update({
+            'seur_add_services': 'Select a service or default service in Seur API',
+            'seur_not_country': 'Add country in shipment "%(name)s" delivery address',
+            'seur_not_price': 'Shipment "%(name)s" not have price and send '
+                'cashondelivery',
+            'seur_error_zip': 'Seur not accept zip "%(zip)s"',
+            'seur_not_send': 'Not send shipment %(name)s',
+            'seur_not_send_error': 'Not send shipment %(name)s. %(error)s',
+            'seur_not_label': 'Not available "%(name)s" label from Seur',
+            })
+
     @staticmethod
     def seur_picking_data(shipment, service, price=None, seur_cities=[], weight=False):
         '''
@@ -126,23 +140,24 @@ class ShipmentOut:
             for shipment in shipments:
                 service = shipment.carrier_service or default_service
                 if not service:
-                    message = 'Add %s service or configure a default API Seur service.' % (shipment.code)
+                    message = self.raise_user_error('seur_add_services', {},
+                        raise_exception=False)
                     errors.append(message)
-                    logging.getLogger('seur').error(message)
                     continue
 
                 if not shipment.delivery_address.country:
-                    message = 'Add %s a country.' % (shipment.code)
+                    message = self.raise_user_error('seur_not_country', {},
+                        raise_exception=False)
                     errors.append(message)
-                    logging.getLogger('seur').error(message)
                     continue
 
                 price = None
                 if shipment.carrier_cashondelivery:
                     price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
                     if not price:
-                        message = 'Shipment %s not have price and send ' \
-                                'cashondelivery' % (shipment.code)
+                        message = self.raise_user_error('seur_not_price', {
+                                'name': shipment.rec_name,
+                                }, raise_exception=False)
                         errors.append(message)
                         continue
 
@@ -182,14 +197,19 @@ class ShipmentOut:
                     temp.close()
                     labels.append(temp.name)
                 else:
-                    message = 'Not label %s shipment available from Seur.' % (shipment.code)
+                    message = cls.raise_user_error('seur_not_label', {
+                            'name': shipment.rec_name,
+                            }, raise_exception=False)
                     errors.append(message)
                     logging.getLogger('seur').error(message)
 
                 if error:
-                    logging.getLogger('seur').error(
-                        'Not send shipment %s. %s' % (shipment.code, error))
-                    errors.append(shipment.code)
+                    message = self.raise_user_error('seur_not_send_error', {
+                            'name': shipment.rec_name,
+                            'error': error,
+                            }, raise_exception=False)
+                    logging.getLogger('seur').error(message)
+                    errors.append(message)
 
         return references, labels, errors
 
