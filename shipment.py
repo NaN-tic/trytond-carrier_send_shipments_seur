@@ -197,7 +197,7 @@ class ShipmentOut:
                     temp.close()
                     labels.append(temp.name)
                 else:
-                    message = cls.raise_user_error('seur_not_label', {
+                    message = self.raise_user_error('seur_not_label', {
                             'name': shipment.rec_name,
                             }, raise_exception=False)
                     errors.append(message)
