@@ -86,7 +86,7 @@ class ShipmentOut:
         else:
             data['clave_reembolso'] = ' '
             data['valor_reembolso'] = '0'
-        if weight and getattr(shipment, 'weight_func'):
+        if weight and hasattr(shipment, 'weight_func'):
             weight = str(shipment.weight_func)
             if weight == '0.0':
                 weight = '1'
