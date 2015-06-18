@@ -138,7 +138,7 @@ class ShipmentOut:
         with Picking(api.username, api.password, api.vat, api.seur_franchise, api.seur_seurid, \
                 api.seur_ci, api.seur_ccc, seur_context) as picking_api:
             for shipment in shipments:
-                service = shipment.carrier_service or default_service
+                service = shipment.carrier_service or shipment.carrier.service or default_service
                 if not service:
                     message = self.raise_user_error('seur_add_services', {},
                         raise_exception=False)
