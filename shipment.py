@@ -31,9 +31,10 @@ class ShipmentOut:
             })
 
     @staticmethod
-    def seur_picking_data(shipment, service, price=None, seur_cities=[], weight=False):
+    def seur_picking_data(api, shipment, service, price=None, seur_cities=[], weight=False):
         '''
         Seur Picking Data
+        :param api: obj
         :param shipment: obj
         :param service: str
         :param price: string
@@ -41,9 +42,17 @@ class ShipmentOut:
         :param weight: bol
         Return data
         '''
-        notes = ''
+        if api.reference_origin and hasattr(shipment, 'origin'):
+            code = shipment.origin and shipment.origin.rec_name or shipment.code
+        else:
+            code = shipment.code
+
+        if code != shipment.code:
+            notes = '%s - %s\n' % (code, shipment.code)
+        else:
+            notes = '%s\n' % (shipment.code)
         if shipment.carrier_notes:
-            notes = shipment.carrier_notes
+            notes += '%s\n' % shipment.carrier_notes
 
         packages = shipment.number_packages
         if not packages or packages == 0:
@@ -77,8 +86,8 @@ class ShipmentOut:
         data['product'] = '2'
         data['total_bultos'] = packages
         data['observaciones'] = notes
-        data['referencia_expedicion'] = shipment.code
-        data['ref_bulto'] = shipment.code
+        data['referencia_expedicion'] = code
+        data['ref_bulto'] = code
         data['clave_portes'] = 'F'
         if shipment.carrier_cashondelivery and price:
             data['clave_reembolso'] = 'F' # F: Facturacion
@@ -163,7 +172,7 @@ class ShipmentOut:
 
                 customer_zip = shipment.delivery_address.zip
                 seur_cities = picking_api.zip(customer_zip)
-                data = self.seur_picking_data(shipment, service, price, seur_cities, api.weight)
+                data = self.seur_picking_data(api, shipment, service, price, seur_cities, api.weight)
                 reference, label, error = picking_api.create(data)
 
                 if reference:
