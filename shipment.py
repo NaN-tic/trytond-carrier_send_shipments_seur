@@ -47,12 +47,9 @@ class ShipmentOut:
         else:
             code = shipment.code
 
-        if code != shipment.code:
-            notes = '%s - %s\n' % (code, shipment.code)
-        else:
-            notes = '%s\n' % (shipment.code)
+        notes = ''
         if shipment.carrier_notes:
-            notes += '%s\n' % shipment.carrier_notes
+            notes = '%s\n' % shipment.carrier_notes
 
         packages = shipment.number_packages
         if not packages or packages == 0:
