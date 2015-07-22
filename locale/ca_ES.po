@@ -12,11 +12,11 @@ msgstr "No està disponible l'etiqueta \"%(name)s\" de Seur."
 
 msgctxt "error:stock.shipment.out:"
 msgid "Not send shipment %(name)s"
-msgstr "No s'ha enviat l'albarà %(name)s"
+msgstr "No s'ha enviat l'albarà %(name)s."
 
 msgctxt "error:stock.shipment.out:"
 msgid "Not send shipment %(name)s. %(error)s"
-msgstr "No s'ha enviat l'albarà %(name)s. %(error)s"
+msgstr "No s'ha enviat l'albarà %(name)s. %(error)s."
 
 msgctxt "error:stock.shipment.out:"
 msgid "Select a service or default service in Seur API"
