@@ -4,14 +4,14 @@
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval
-
 import logging
 
 try:
     from seur.picking import *
 except ImportError:
+    logger = logging.getLogger(__name__)
     message = 'Install Seur from Pypi: pip install seur'
-    logging.getLogger('seur').error(message)
+    logger.error(message)
     raise Exception(message)
 
 __all__ = ['CarrierApi']
