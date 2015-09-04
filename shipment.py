@@ -44,6 +44,8 @@ class ShipmentOut:
         :param weight: bol
         Return data
         '''
+        Uom = Pool().get('product.uom')
+
         if api.reference_origin and hasattr(shipment, 'origin'):
             code = shipment.origin and shipment.origin.rec_name or shipment.code
         else:
@@ -94,12 +96,21 @@ class ShipmentOut:
         else:
             data['clave_reembolso'] = ' '
             data['valor_reembolso'] = '0'
+
         if weight and hasattr(shipment, 'weight_func'):
-            weight = str(shipment.weight_func)
-            if weight == '0.0':
-                weight = '1'
-            data['total_kilos'] = weight
-            data['peso_bulto'] = weight
+            weight = shipment.weight_func
+            if weight == 0:
+                weight = 1
+            if api.weight_api_unit:
+                if shipment.weight_uom:
+                    weight = Uom.compute_qty(
+                        shipment.weight_uom, weight, api.weight_api_unit)
+                elif api.weight_unit:
+                    weight = Uom.compute_qty(
+                        api.weight_unit, weight, api.weight_api_unit)
+            data['total_kilos'] = str(weight)
+            data['peso_bulto'] = str(weight)
+
         data['cliente_nombre'] = unaccent(shipment.customer.name)
         data['cliente_direccion'] = unaccent(shipment.delivery_address.street)
         #~ data['cliente_tipovia'] = 'CL'
