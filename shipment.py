@@ -265,7 +265,7 @@ class ShipmentOut:
 
                 customer_zip = shipment.delivery_address.zip
                 seur_cities = picking_api.zip(customer_zip)
-                data = self.seur_picking_data(shipment, service, price, seur_cities, api.weight)
+                data = self.seur_picking_data(api, shipment, service, price, seur_cities, api.weight)
                 label = picking_api.label(data)
 
                 if label:
@@ -273,12 +273,12 @@ class ShipmentOut:
                         with tempfile.NamedTemporaryFile(
                                 prefix='%s-seur-%s-' % (dbname, shipment.carrier_tracking_ref),
                                 suffix='.pdf', delete=False) as temp:
-                            temp.write(decodestring(label))
+                            temp.write(decodestring(label.encode('utf-8')))
                     else:
                         with tempfile.NamedTemporaryFile(
                                 prefix='%s-seur-%s-' % (dbname, shipment.carrier_tracking_ref),
                                 suffix='.txt', delete=False) as temp:
-                            temp.write(label)
+                            temp.write(label.encode('utf-8'))
                     logging.getLogger('seur').info(
                         'Generated tmp label %s' % (temp.name))
                     temp.close()
