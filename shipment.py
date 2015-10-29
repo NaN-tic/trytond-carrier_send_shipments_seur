@@ -31,14 +31,13 @@ class ShipmentOut:
             })
 
     @staticmethod
-    def seur_picking_data(api, shipment, service, price=None, seur_cities=[], weight=False):
+    def seur_picking_data(api, shipment, service, price=None, weight=False):
         '''
         Seur Picking Data
         :param api: obj
         :param shipment: obj
         :param service: str
         :param price: string
-        :param seur_cities: list
         :param weight: bol
         Return data
         '''
@@ -57,16 +56,6 @@ class ShipmentOut:
 
         customer_city = unaccent(shipment.delivery_address.city)
         customer_zip = shipment.delivery_address.zip
-
-        # change customer city to seur city because seur required
-        # city equal in their API
-        seur_customer_city = customer_city
-        if seur_cities:
-            seur_customer_city = seur_cities[0]['NOM_POBLACION']
-        for option in seur_cities:
-            if option['NOM_POBLACION'] == customer_city.upper():
-                seur_customer_city = option['NOM_POBLACION']
-                break
 
         notes = '%(notes)s' \
             '%(name)s. %(street)s. %(zip)s %(city)s - %(country)s\n' % {
@@ -106,7 +95,7 @@ class ShipmentOut:
         #~ data['cliente_escalera'] = 'A'
         #~ data['cliente_piso'] = '3'
         #~ data['cliente_puerta'] = '2'
-        data['cliente_poblacion'] = seur_customer_city
+        data['cliente_poblacion'] = customer_city
         data['cliente_cpostal'] = customer_zip
         data['cliente_pais'] = shipment.delivery_address.country.code
         if shipment.customer.email:
@@ -167,9 +156,7 @@ class ShipmentOut:
                         errors.append(message)
                         continue
 
-                customer_zip = shipment.delivery_address.zip
-                seur_cities = picking_api.zip(customer_zip)
-                data = self.seur_picking_data(api, shipment, service, price, seur_cities, api.weight)
+                data = self.seur_picking_data(api, shipment, service, price, api.weight)
                 reference, label, error = picking_api.create(data)
 
                 if reference:
@@ -263,9 +250,7 @@ class ShipmentOut:
                         errors.append(message)
                         continue
 
-                customer_zip = shipment.delivery_address.zip
-                seur_cities = picking_api.zip(customer_zip)
-                data = self.seur_picking_data(api, shipment, service, price, seur_cities, api.weight)
+                data = self.seur_picking_data(api, shipment, service, price, api.weight)
                 label = picking_api.label(data)
 
                 if label:
