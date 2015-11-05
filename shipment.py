@@ -184,7 +184,7 @@ class ShipmentOut:
                         with tempfile.NamedTemporaryFile(
                                 prefix='%s-seur-%s-' % (dbname, reference),
                                 suffix='.txt', delete=False) as temp:
-                            temp.write(label)
+                            temp.write(label.encode("utf-8"))
                     logging.getLogger('seur').info(
                         'Generated tmp label %s' % (temp.name))
                     temp.close()
