@@ -194,7 +194,7 @@ class ShipmentOut:
                     else:
                         with tempfile.NamedTemporaryFile(
                                 prefix='%s-seur-%s-' % (dbname, reference),
-                                suffix='.txt', delete=False) as temp:
+                                suffix='.zpl', delete=False) as temp:
                             temp.write(label.encode('utf-8'))
                     logger.info('Generated tmp label %s' % (temp.name))
                     temp.close()
@@ -272,7 +272,7 @@ class ShipmentOut:
                     else:
                         with tempfile.NamedTemporaryFile(
                                 prefix='%s-seur-%s-' % (dbname, shipment.carrier_tracking_ref),
-                                suffix='.txt', delete=False) as temp:
+                                suffix='.zpl', delete=False) as temp:
                             temp.write(label.encode('utf-8'))
                     logger.info(
                         'Generated tmp label %s' % (temp.name))
