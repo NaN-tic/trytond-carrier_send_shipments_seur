@@ -106,6 +106,10 @@ class ShipmentOut:
         data['cliente_telefono'] = unspaces(shipment.get_phone_shipment_out(shipment))
         data['cliente_atencion'] = unaccent((shipment.delivery_address.name
                 or shipment.customer.name))
+        data['aviso_preaviso'] = 'S' if api.seur_aviso_preaviso else 'N'
+        data['aviso_reparto'] = 'S' if api.seur_aviso_reparto else 'N'
+        data['aviso_email'] = 'S' if api.seur_aviso_email else 'N'
+        data['aviso_sms'] = 'S' if api.seur_aviso_sms else 'N'
         return data
 
     @classmethod
