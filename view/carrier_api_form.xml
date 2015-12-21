@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!-- This file is part of the carrier_send_shipments_seur module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook/page[@id='api']" position="after">
+        <page string="Seur" id="seur">
+            <label name="seur_franchise"/>
+            <field name="seur_franchise"/>
+            <label name="seur_seurid"/>
+            <field name="seur_seurid"/>
+            <label name="seur_ci"/>
+            <field name="seur_ci"/>
+            <label name="seur_ccc"/>
+            <field name="seur_ccc"/>
+            <label name="seur_printer"/>
+            <field name="seur_printer"/>
+            <label name="seur_printer_model"/>
+            <field name="seur_printer_model"/>
+            <label name="seur_ecb_code"/>
+            <field name="seur_ecb_code"/>
+            <label name="seur_pdf"/>
+            <field name="seur_pdf"/>
+            <label name="seur_aviso_preaviso"/>
+            <field name="seur_aviso_preaviso"/>
+            <label name="seur_aviso_reparto"/>
+            <field name="seur_aviso_reparto"/>
+            <label name="seur_aviso_email"/>
+            <field name="seur_aviso_email"/>
+            <label name="seur_aviso_sms"/>
+            <field name="seur_aviso_sms"/>
+        </page>
+    </xpath>
+</data>
