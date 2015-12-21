@@ -36,6 +36,10 @@ class CarrierApi:
     seur_printer_model = fields.Char('Printer Model', help='Seur Printer Model')
     seur_ecb_code = fields.Char('ECB Code', help='Seur ECB Code')
     seur_pdf = fields.Boolean('PDF', help='PDF Label')
+    seur_aviso_preaviso = fields.Boolean('Aviso Preaviso')
+    seur_aviso_reparto = fields.Boolean('Aviso Reparto')
+    seur_aviso_email = fields.Boolean('Aviso Email')
+    seur_aviso_sms = fields.Boolean('Aviso SMS')
 
     @classmethod
     def get_carrier_app(cls):
