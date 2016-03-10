@@ -138,7 +138,7 @@ class ShipmentOut:
         errors = []
 
         default_service = CarrierApi.get_default_carrier_service(api)
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
 
         seur_context = {}
         if api.seur_pdf:
@@ -227,7 +227,7 @@ class ShipmentOut:
         ShipmentOut = pool.get('stock.shipment.out')
 
         default_service = CarrierApi.get_default_carrier_service(api)
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
 
         labels = []
         errors = []
