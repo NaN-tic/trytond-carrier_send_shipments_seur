@@ -7,10 +7,10 @@ from trytond.transaction import Transaction
 from base64 import decodestring
 
 __all__ = ['CarrierManifest']
-__metaclass__ = PoolMeta
 
 
 class CarrierManifest:
+    __metaclass__ = PoolMeta
     __name__ = 'carrier.manifest'
 
     def get_manifest_seur(self, api, from_date, to_date):
