@@ -58,17 +58,20 @@ class ShipmentOut:
         if not packages or packages == 0:
             packages = 1
 
+        customer_name = shipment.delivery_address.name or shipment.customer.name
+        customer_street = shipment.delivery_address.street
         customer_city = unaccent(shipment.delivery_address.city)
         customer_zip = shipment.delivery_address.zip
+        customer_country_code = shipment.delivery_address.country.code
 
         notes = '%(notes)s' \
             '%(name)s. %(street)s. %(zip)s %(city)s - %(country)s\n' % {
                 'notes': unaccent(notes),
-                'name': unaccent(shipment.customer.name),
-                'street': unaccent(shipment.delivery_address.street),
+                'name': unaccent(customer_name),
+                'street': unaccent(customer_street),
                 'zip': customer_zip,
-                'city': customer_city,
-                'country': shipment.delivery_address.country.code,
+                'city': unaccent(customer_city),
+                'country': customer_country_code,
                 }
 
         data = {}
@@ -100,25 +103,24 @@ class ShipmentOut:
             data['total_kilos'] = str(weight)
             data['peso_bulto'] = str(weight)
 
-        data['cliente_nombre'] = unaccent(shipment.customer.name)
-        data['cliente_direccion'] = unaccent(shipment.delivery_address.street)
+        data['cliente_nombre'] = unaccent(customer_name)
+        data['cliente_direccion'] = unaccent(customer_street)
         #~ data['cliente_tipovia'] = 'CL'
         #~ data['cliente_tnumvia'] = 'N'
         #~ data['cliente_numvia'] = '93'
         #~ data['cliente_escalera'] = 'A'
         #~ data['cliente_piso'] = '3'
         #~ data['cliente_puerta'] = '2'
-        data['cliente_poblacion'] = customer_city
+        data['cliente_poblacion'] = unaccent(customer_city)
         data['cliente_cpostal'] = customer_zip
-        data['cliente_pais'] = shipment.delivery_address.country.code
+        data['cliente_pais'] = customer_country_code
         if shipment.customer.email:
             if shipment.delivery_address.email:
                 data['cliente_email'] = shipment.delivery_address.email
             else:
                 data['cliente_email'] = shipment.customer.email
         data['cliente_telefono'] = unspaces(shipment.get_phone_shipment_out(shipment))
-        data['cliente_atencion'] = unaccent((shipment.delivery_address.name
-                or shipment.customer.name))
+        data['cliente_atencion'] = unaccent(customer_name)
         data['aviso_preaviso'] = 'S' if api.seur_aviso_preaviso else 'N'
         data['aviso_reparto'] = 'S' if api.seur_aviso_reparto else 'N'
         data['aviso_email'] = 'S' if api.seur_aviso_email else 'N'
