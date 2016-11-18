@@ -150,7 +150,7 @@ class ShipmentOut:
         if api.seur_pdf:
             seur_context['pdf'] = True
         with Picking(api.username, api.password, api.vat, api.seur_franchise, api.seur_seurid, \
-                api.seur_ci, api.seur_ccc, seur_context) as picking_api:
+                api.seur_ci, api.seur_ccc, timeout=api.timeout, context=seur_context) as picking_api:
             for shipment in shipments:
                 service = shipment.carrier_service or shipment.carrier.service or default_service
                 if not service:
@@ -183,6 +183,7 @@ class ShipmentOut:
                         'carrier_tracking_ref': reference,
                         'carrier_service': service,
                         'carrier_delivery': True,
+                        'carrier_printed': True,
                         'carrier_send_date': ShipmentOut.get_carrier_date(),
                         'carrier_send_employee': ShipmentOut.get_carrier_employee() or None,
                         })
@@ -242,7 +243,7 @@ class ShipmentOut:
         if api.seur_pdf:
             seur_context['pdf'] = True
         with Picking(api.username, api.password, api.vat, api.seur_franchise, api.seur_seurid, \
-                api.seur_ci, api.seur_ccc, seur_context) as picking_api:
+                api.seur_ci, api.seur_ccc, timeout=api.timeout, context=seur_context) as picking_api:
             for shipment in shipments:
                 service = shipment.carrier_service or default_service
                 if not service:
