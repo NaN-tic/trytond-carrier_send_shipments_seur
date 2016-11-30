@@ -10,15 +10,15 @@ try:
     from seur.picking import *
 except ImportError:
     logger = logging.getLogger(__name__)
-    message = 'Install Seur from Pypi: pip install seur'
+    message = 'Install Seur: pip install seur'
     logger.error(message)
     raise Exception(message)
 
 __all__ = ['CarrierApi']
+__metaclass__ = PoolMeta
 
 
 class CarrierApi:
-    __metaclass__ = PoolMeta
     __name__ = 'carrier.api'
     seur_franchise = fields.Char('Franchise', states={
             'required': Eval('method') == 'seur',
@@ -57,15 +57,13 @@ class CarrierApi:
                     'invisible': Not(Equal(Eval('method'), 'seur')),
                     })]
 
-    def test_seur(self, api):
-        '''
-        Test Seur connection
-        :param api: obj
-        '''
+    @classmethod
+    def test_seur(cls, api):
+        'Test Seur connection'
         message = 'Connection unknown result'
-        
+
         seur_context = {}
         with API(api.username, api.password, api.vat, api.seur_franchise, api.seur_seurid, \
                 api.seur_ci, api.seur_ccc, seur_context) as seur_api:
             message = seur_api.test_connection()
-        self.raise_user_error(message)
+        cls.raise_user_error(message)
