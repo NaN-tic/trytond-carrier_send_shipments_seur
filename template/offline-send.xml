@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root xmlns:py="http://genshi.edgewall.org/">
+<py:def function="Shipments()">
+  <exp py:for="s in shipments">
+      <bulto py:for="i in range(0, s.total_bultos)">
+          <ci>${ci}</ci>
+          <nif>${vat}</nif>
+          <ccc>${ccc}</ccc>
+          <cod_barras>${s.barcode}</cod_barras>
+          <servicio>${s.servicio}</servicio>
+          <producto>${s.product}</producto>
+          <total_bultos>${s.total_bultos}</total_bultos>
+          <total_kilos>${s.total_kilos}</total_kilos>
+          <pesoBulto>${s.peso_bulto}</pesoBulto>
+          <observaciones>${s.observaciones}</observaciones>
+          <referencia_expedicion>${s.referencia_expedicion}</referencia_expedicion>
+          <ref_bulto>${s.ref_bulto}</ref_bulto>
+          <clavePortes>${s.clave_portes}</clavePortes>
+          <claveReembolso>${s.clave_reembolso}</claveReembolso>
+          <valorReembolso>${s.valor_reembolso}</valorReembolso>
+          <nombre_consignatario>${s.cliente_nombre}</nombre_consignatario>
+          <direccion_consignatario>${s.cliente_direccion}</direccion_consignatario>
+          <tipoVia_consignatario>${s.get('cliente_tipovia')}</tipoVia_consignatario>
+          <tNumVia_consignatario>${s.get('cliente_tnumvia')}</tNumVia_consignatario>
+          <numVia_consignatario>${s.get('cliente_numvia')}</numVia_consignatario>
+          <escalera_consignatario>${s.get('cliente_escalera')}</escalera_consignatario>
+          <piso_consignatario>${s.get('cliente_piso')}</piso_consignatario>
+          <puerta_consignatario>${s.get('cliente_puerta')}</puerta_consignatario>
+          <poblacion_consignatario>${s.cliente_poblacion}</poblacion_consignatario>
+          <codPostal_consignatario>${s.cliente_cpostal}</codPostal_consignatario>
+          <pais_consignatario>${s.cliente_pais}</pais_consignatario>
+          <email_consignatario>${s.get('cliente_email')}</email_consignatario>
+          <telefono_consignatario>${s.get('cliente_telefono')}</telefono_consignatario>
+          <sms_consignatario>${s.get('sms_consignatario')}</sms_consignatario>
+          <atencion_de>${s.get('cliente_atencion')}</atencion_de>
+          <test_preaviso>${s.get('aviso_preaviso')}</test_preaviso>
+          <test_reparto>${s.get('aviso_reparto')}</test_reparto>
+          <test_email>${s.get('aviso_email')}</test_email>
+          <test_sms>${s.get('aviso_sms')}</test_sms>
+          <id_mercancia>${s.get('id_mercancia')}</id_mercancia>
+      </bulto>
+  </exp>
+</py:def>
+    ${Shipments()}
+</root>

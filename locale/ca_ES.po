@@ -1,6 +1,22 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:carrier.api.seur.offline:"
+msgid ""
+"Not found SMTP server. Configure a SMTP server related with Seur Offline!"
+msgstr ""
+"No s'ha trobat un servidor SMTP. Configureu un servidor SMTP relacionat amb "
+"Seur Offline."
+
+msgctxt "error:carrier.api.seur.offline:"
+msgid "Wrong connection to SMTP server. Not send email."
+msgstr "Error de connexó al servidor SMTP. No s'ha enviat el correu."
+
+msgctxt "error:carrier.api:"
+msgid "Can not test connection because are working offline"
+msgstr ""
+"No es pot realitzar la connexió de test perque es troba en mode offline."
 
 msgctxt "error:stock.shipment.out:"
 msgid "Add country in shipment \"%(name)s\" delivery address"
@@ -11,12 +27,12 @@ msgid "Not available \"%(name)s\" label from Seur"
 msgstr "No està disponible l'etiqueta \"%(name)s\" de Seur."
 
 msgctxt "error:stock.shipment.out:"
-msgid "Not send shipment %(name)s"
-msgstr "No s'ha enviat l'albarà %(name)s."
+msgid "Not send shipment \"%(name)s\""
+msgstr "No s'ha enviat l'albarà \"%(name)s\"."
 
 msgctxt "error:stock.shipment.out:"
-msgid "Not send shipment %(name)s. %(error)s"
-msgstr "No s'ha enviat l'albarà %(name)s. %(error)s."
+msgid "Not send shipment \"%(name)s\". %(error)s"
+msgstr "No s'ha enviat l'albarà \"%(name)s\". %(error)s."
 
 msgctxt "error:stock.shipment.out:"
 msgid "Select a service or default service in Seur API"
@@ -27,8 +43,28 @@ msgid "Seur not accept zip \"%(zip)s\""
 msgstr "Seur no accepta el codi postal \"%(zip)s\"."
 
 msgctxt "error:stock.shipment.out:"
+msgid "Seur reference is not an integer. Please, check the seur sequence"
+msgstr "La referència de Seur no és un enter. Revisi la configuració de Seur"
+
+msgctxt "error:stock.shipment.out:"
 msgid "Shipment \"%(name)s\" not have price and send cashondelivery"
 msgstr "L'albarà \"%(name)s\" no diposa de preus i contrarembolsament."
+
+msgctxt "field:carrier.api,seur_aviso_email:"
+msgid "Aviso Email"
+msgstr "Aviso Email"
+
+msgctxt "field:carrier.api,seur_aviso_preaviso:"
+msgid "Aviso Preaviso"
+msgstr "Aviso Preaviso"
+
+msgctxt "field:carrier.api,seur_aviso_reparto:"
+msgid "Aviso Reparto"
+msgstr "Aviso Reparto"
+
+msgctxt "field:carrier.api,seur_aviso_sms:"
+msgid "Aviso SMS"
+msgstr "Aviso SMS"
 
 msgctxt "field:carrier.api,seur_ccc:"
 msgid "CCC"
@@ -42,9 +78,33 @@ msgctxt "field:carrier.api,seur_ecb_code:"
 msgid "ECB Code"
 msgstr "Codi ECB"
 
+msgctxt "field:carrier.api,seur_email:"
+msgid "Seur Email"
+msgstr "Correu Seur"
+
+msgctxt "field:carrier.api,seur_email_backup:"
+msgid "Seur Backup Email"
+msgstr "Correu backup Seur"
+
+msgctxt "field:carrier.api,seur_filename:"
+msgid "Seur Filename"
+msgstr "Nom fitxer Seur"
+
 msgctxt "field:carrier.api,seur_franchise:"
 msgid "Franchise"
 msgstr "Franquícia"
+
+msgctxt "field:carrier.api,seur_maximun_reference:"
+msgid "Max Reference"
+msgstr "Màxima referencia"
+
+msgctxt "field:carrier.api,seur_minimum_reference:"
+msgid "Min Reference"
+msgstr "Mínima referència"
+
+msgctxt "field:carrier.api,seur_offline:"
+msgid "Offline"
+msgstr "Offline"
 
 msgctxt "field:carrier.api,seur_pdf:"
 msgid "PDF"
@@ -58,7 +118,59 @@ msgctxt "field:carrier.api,seur_printer_model:"
 msgid "Printer Model"
 msgstr "Model impressora"
 
+msgctxt "field:carrier.api,seur_reference:"
+msgid "Seur Reference"
+msgstr "Referència Seur"
+
 msgctxt "field:carrier.api,seur_seurid:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:carrier.api.seur.offline,api:"
+msgid "API"
+msgstr "API"
+
+msgctxt "field:carrier.api.seur.offline,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:carrier.api.seur.offline,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:carrier.api.seur.offline,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:carrier.api.seur.offline,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:carrier.api.seur.offline,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:carrier.api.seur.offline,shipment:"
+msgid "Shipment"
+msgstr "Enviaments"
+
+msgctxt "field:carrier.api.seur.offline,state:"
+msgid "State"
+msgstr "Estat"
+
+msgctxt "field:carrier.api.seur.offline,write_date:"
+msgid "Write Date"
+msgstr "Usuari creació"
+
+msgctxt "field:carrier.api.seur.offline,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:carrier.api.seur.offline.send.start,api:"
+msgid "API"
+msgstr "API"
+
+msgctxt "field:carrier.api.seur.offline.send.start,id:"
 msgid "ID"
 msgstr "ID"
 
@@ -74,9 +186,33 @@ msgctxt "help:carrier.api,seur_ecb_code:"
 msgid "Seur ECB Code"
 msgstr "Codi ECB Seur"
 
+msgctxt "help:carrier.api,seur_email:"
+msgid "Seur TO email"
+msgstr "Correu destinatari Seur"
+
+msgctxt "help:carrier.api,seur_email_backup:"
+msgid "Seur CC backup email"
+msgstr "Correu CC backup Seur"
+
+msgctxt "help:carrier.api,seur_filename:"
+msgid "Prefix Seur Filename"
+msgstr "Prefix del nom fitxer Seur"
+
 msgctxt "help:carrier.api,seur_franchise:"
 msgid "Seur Franchise code"
 msgstr "Codi franquícia"
+
+msgctxt "help:carrier.api,seur_maximun_reference:"
+msgid "Maximun number reference"
+msgstr "Número màxim de la referencia"
+
+msgctxt "help:carrier.api,seur_minimum_reference:"
+msgid "Minimum number reference"
+msgstr "Número mínim de la referencia"
+
+msgctxt "help:carrier.api,seur_offline:"
+msgid "Working the API offline"
+msgstr "Usará la API offline"
 
 msgctxt "help:carrier.api,seur_pdf:"
 msgid "PDF Label"
@@ -90,13 +226,89 @@ msgctxt "help:carrier.api,seur_printer_model:"
 msgid "Seur Printer Model"
 msgstr "Model impressora Seur"
 
+msgctxt "help:carrier.api,seur_reference:"
+msgid "Sequence to assign a tracking reference"
+msgstr "Seqüència per assignar a la referencia del transportista"
+
 msgctxt "help:carrier.api,seur_seurid:"
 msgid "Seur Description code"
 msgstr "Codi descripció Seur"
 
+msgctxt "model:carrier.api.seur.offline,name:"
+msgid "Carrier API Seur Offline"
+msgstr "API Seur Offline"
+
+msgctxt "model:carrier.api.seur.offline.send.start,name:"
+msgid "Carrier API Seur Offline Send Start"
+msgstr "Inici enviament API Seur Offline"
+
+msgctxt "model:ir.action,name:act_carrier_api_seur_offline_form"
+msgid "Carriers API Seur Offline"
+msgstr "API Seur Offline"
+
+msgctxt "model:ir.action,name:wizard_carrier_api_seur_offline_send"
+msgid "Send Seur Offline"
+msgstr "Envia API Seur Offline"
+
+msgctxt "model:ir.cron,name:cron_carrier_api_send_seur_offline"
+msgid "Send Seur Offline"
+msgstr "Envia API Seur Offline"
+
+msgctxt "model:ir.sequence,name:sequence_carrier_api_seur"
+msgid "Seur API"
+msgstr "Seur API"
+
+msgctxt "model:ir.sequence.type,name:sequence_type_carrier_api_seur"
+msgid "Seur API"
+msgstr "Seur API"
+
+msgctxt "model:ir.ui.menu,name:menu_carrier_api_seur_offline_form"
+msgid "Carriers API Seur Offline"
+msgstr "API Seur Offline"
+
+msgctxt "model:ir.ui.menu,name:menu_carrier_api_seur_offline_send"
+msgid "Send Seur Offline"
+msgstr "Envia API Seur Offline"
+
+msgctxt "model:res.user,name:user_carrier_api_seur"
+msgid "Cron Carrier API Seur"
+msgstr "Cron API Seur Offline"
+
+msgctxt "selection:carrier.api.seur.offline,state:"
+msgid "Done"
+msgstr "Finalitzat"
+
+msgctxt "selection:carrier.api.seur.offline,state:"
+msgid "Draft"
+msgstr "Esborrany"
+
+msgctxt "view:carrier.api.seur.offline.send.start:"
+msgid "Carrier API Seur Offline"
+msgstr "API Seur Offline"
+
+msgctxt "view:carrier.api.seur.offline.send.start:"
+msgid "Note that this operation may take a few minutes."
+msgstr "Aquesta operació pot tardar uns minuts."
+
+msgctxt "view:carrier.api.seur.offline.send.start:"
+msgid "Send Seur Offline."
+msgstr "Envia Seur Offline."
+
+msgctxt "view:carrier.api.seur.offline:"
+msgid "Carrier API Seur Offline"
+msgstr "API Seur Offline"
+
 msgctxt "view:carrier.api:"
 msgid "Seur"
 msgstr "Seur"
+
+msgctxt "wizard_button:carrier.api.seur.offline.send,start,end:"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "wizard_button:carrier.api.seur.offline.send,start,send:"
+msgid "Send"
+msgstr "Envia"
 
 msgctxt "wizard_button:carrier.send.shipments,result,end:"
 msgid "Close"

@@ -1,6 +1,21 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:carrier.api.seur.offline:"
+msgid ""
+"Not found SMTP server. Configure a SMTP server related with Seur Offline!"
+msgstr ""
+"No se ha encontrado un servidor SMTP. Configure un servidor SMTP relacionado"
+" con Seur Offline."
+
+msgctxt "error:carrier.api.seur.offline:"
+msgid "Wrong connection to SMTP server. Not send email."
+msgstr "Error de conexión al servidor SMTP. No se ha enviado el correo."
+
+msgctxt "error:carrier.api:"
+msgid "Can not test connection because are working offline"
+msgstr "No se puede testear la conexión porque se encuentra modo offline."
 
 msgctxt "error:stock.shipment.out:"
 msgid "Add country in shipment \"%(name)s\" delivery address"
@@ -11,12 +26,12 @@ msgid "Not available \"%(name)s\" label from Seur"
 msgstr "No se dispone la etiqueta \"%(name)s\" de Seur."
 
 msgctxt "error:stock.shipment.out:"
-msgid "Not send shipment %(name)s"
-msgstr "No se ha enviado el albarán %(name)s."
+msgid "Not send shipment \"%(name)s\""
+msgstr "No se ha enviado el albarán \"%(name)s.\""
 
 msgctxt "error:stock.shipment.out:"
-msgid "Not send shipment %(name)s. %(error)s"
-msgstr "No se ha enviado el albarán %(name)s. %(error)s."
+msgid "Not send shipment \"%(name)s\". %(error)s"
+msgstr "No se ha enviado el albarán \"%(name)s\". %(error)s."
 
 msgctxt "error:stock.shipment.out:"
 msgid "Select a service or default service in Seur API"
@@ -27,8 +42,30 @@ msgid "Seur not accept zip \"%(zip)s\""
 msgstr "Seur no accepta el código postal \"%(zip)s\""
 
 msgctxt "error:stock.shipment.out:"
+msgid "Seur reference is not an integer. Please, check the seur sequence"
+msgstr ""
+"La secuenda de la referencia de Seur no es un entero. Por favor, revise la "
+"secuencia."
+
+msgctxt "error:stock.shipment.out:"
 msgid "Shipment \"%(name)s\" not have price and send cashondelivery"
 msgstr "El albarán \"%(name)s\" no dispone de precio y contrarembolso."
+
+msgctxt "field:carrier.api,seur_aviso_email:"
+msgid "Aviso Email"
+msgstr "Aviso Email"
+
+msgctxt "field:carrier.api,seur_aviso_preaviso:"
+msgid "Aviso Preaviso"
+msgstr "Aviso Preaviso"
+
+msgctxt "field:carrier.api,seur_aviso_reparto:"
+msgid "Aviso Reparto"
+msgstr "Aviso Reparto"
+
+msgctxt "field:carrier.api,seur_aviso_sms:"
+msgid "Aviso SMS"
+msgstr "Aviso SMS"
 
 msgctxt "field:carrier.api,seur_ccc:"
 msgid "CCC"
@@ -42,9 +79,33 @@ msgctxt "field:carrier.api,seur_ecb_code:"
 msgid "ECB Code"
 msgstr "Código ECB"
 
+msgctxt "field:carrier.api,seur_email:"
+msgid "Seur Email"
+msgstr "Correo Seur"
+
+msgctxt "field:carrier.api,seur_email_backup:"
+msgid "Seur Backup Email"
+msgstr "Correo backup Seur"
+
+msgctxt "field:carrier.api,seur_filename:"
+msgid "Seur Filename"
+msgstr "Nombre del fichero Seur"
+
 msgctxt "field:carrier.api,seur_franchise:"
 msgid "Franchise"
 msgstr "Franquicia"
+
+msgctxt "field:carrier.api,seur_maximun_reference:"
+msgid "Max Reference"
+msgstr "Máxima referencia"
+
+msgctxt "field:carrier.api,seur_minimum_reference:"
+msgid "Min Reference"
+msgstr "Mínima referencia"
+
+msgctxt "field:carrier.api,seur_offline:"
+msgid "Offline"
+msgstr "Offline"
 
 msgctxt "field:carrier.api,seur_pdf:"
 msgid "PDF"
@@ -58,7 +119,59 @@ msgctxt "field:carrier.api,seur_printer_model:"
 msgid "Printer Model"
 msgstr "Modelo impresora"
 
+msgctxt "field:carrier.api,seur_reference:"
+msgid "Seur Reference"
+msgstr "Referencia Seur"
+
 msgctxt "field:carrier.api,seur_seurid:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:carrier.api.seur.offline,api:"
+msgid "API"
+msgstr "API"
+
+msgctxt "field:carrier.api.seur.offline,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:carrier.api.seur.offline,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:carrier.api.seur.offline,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:carrier.api.seur.offline,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:carrier.api.seur.offline,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:carrier.api.seur.offline,shipment:"
+msgid "Shipment"
+msgstr "Envío"
+
+msgctxt "field:carrier.api.seur.offline,state:"
+msgid "State"
+msgstr "Estado"
+
+msgctxt "field:carrier.api.seur.offline,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:carrier.api.seur.offline,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:carrier.api.seur.offline.send.start,api:"
+msgid "API"
+msgstr "API"
+
+msgctxt "field:carrier.api.seur.offline.send.start,id:"
 msgid "ID"
 msgstr "ID"
 
@@ -74,9 +187,33 @@ msgctxt "help:carrier.api,seur_ecb_code:"
 msgid "Seur ECB Code"
 msgstr "Código ECB Seur"
 
+msgctxt "help:carrier.api,seur_email:"
+msgid "Seur TO email"
+msgstr "Correo destinatario Seur"
+
+msgctxt "help:carrier.api,seur_email_backup:"
+msgid "Seur CC backup email"
+msgstr "Correo CC backup Seur"
+
+msgctxt "help:carrier.api,seur_filename:"
+msgid "Prefix Seur Filename"
+msgstr "Prefijo nombre fichero Seur"
+
 msgctxt "help:carrier.api,seur_franchise:"
 msgid "Seur Franchise code"
 msgstr "Código franquicia Seur"
+
+msgctxt "help:carrier.api,seur_maximun_reference:"
+msgid "Maximun number reference"
+msgstr "Número máximo de la referencia"
+
+msgctxt "help:carrier.api,seur_minimum_reference:"
+msgid "Minimum number reference"
+msgstr "Número mínimo de la referencia"
+
+msgctxt "help:carrier.api,seur_offline:"
+msgid "Working the API offline"
+msgstr "Usará la API offline"
 
 msgctxt "help:carrier.api,seur_pdf:"
 msgid "PDF Label"
@@ -90,13 +227,90 @@ msgctxt "help:carrier.api,seur_printer_model:"
 msgid "Seur Printer Model"
 msgstr "Modelo impresora Seur"
 
+msgctxt "help:carrier.api,seur_reference:"
+msgid "Sequence to assign a tracking reference"
+msgstr "Secuencia para asignar a las referencias del transportista"
+
 msgctxt "help:carrier.api,seur_seurid:"
 msgid "Seur Description code"
 msgstr "Código descripción Seur"
 
+msgctxt "model:carrier.api.seur.offline,name:"
+msgid "Carrier API Seur Offline"
+msgstr "API Seur Offline"
+
+#, fuzzy
+msgctxt "model:carrier.api.seur.offline.send.start,name:"
+msgid "Carrier API Seur Offile Send Start"
+msgstr "Inicio envío API Seur Offline"
+
+msgctxt "model:ir.action,name:act_carrier_api_seur_offline_form"
+msgid "Carriers API Seur Offline"
+msgstr "API Seur Offline"
+
+msgctxt "model:ir.action,name:wizard_carrier_api_seur_offline_send"
+msgid "Send Seur Offline"
+msgstr "Enviar Seur Offline"
+
+msgctxt "model:ir.cron,name:cron_carrier_api_send_seur_offline"
+msgid "Send Seur Offline"
+msgstr "Enviar Seur Offline"
+
+msgctxt "model:ir.sequence,name:sequence_carrier_api_seur"
+msgid "Seur API"
+msgstr "Seur API"
+
+msgctxt "model:ir.sequence.type,name:sequence_type_carrier_api_seur"
+msgid "Seur API"
+msgstr "Seur API"
+
+msgctxt "model:ir.ui.menu,name:menu_carrier_api_seur_offline_form"
+msgid "Carriers API Seur Offline"
+msgstr "API Seur Offline"
+
+msgctxt "model:ir.ui.menu,name:menu_carrier_api_seur_offline_send"
+msgid "Send Seur Offline"
+msgstr "Enviar Seur Offline"
+
+msgctxt "model:res.user,name:user_carrier_api_seur"
+msgid "Cron Carrier API Seur"
+msgstr "Cron API Seur Offline"
+
+msgctxt "selection:carrier.api.seur.offline,state:"
+msgid "Done"
+msgstr "Realizado"
+
+msgctxt "selection:carrier.api.seur.offline,state:"
+msgid "Draft"
+msgstr "Borrador"
+
+msgctxt "view:carrier.api.seur.offline.send.start:"
+msgid "Carrier API Seur Offline"
+msgstr "API Seur Offline"
+
+msgctxt "view:carrier.api.seur.offline.send.start:"
+msgid "Note that this operation may take a few minutes."
+msgstr "Tenga en cuenta que esta operación puede tardar unos minutos."
+
+msgctxt "view:carrier.api.seur.offline.send.start:"
+msgid "Send Seur Offline."
+msgstr "Enviar Seur Offline."
+
+msgctxt "view:carrier.api.seur.offline:"
+msgid "Carrier API Seur Offline"
+msgstr "API Seur Offline"
+
 msgctxt "view:carrier.api:"
 msgid "Seur"
 msgstr "Seur"
+
+msgctxt "wizard_button:carrier.api.seur.offline.send,start,end:"
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgctxt "wizard_button:carrier.api.seur.offline.send,start,send:"
+msgid "Send"
+msgstr "Enviar"
 
 msgctxt "wizard_button:carrier.send.shipments,result,end:"
 msgid "Close"

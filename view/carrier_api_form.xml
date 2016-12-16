@@ -5,6 +5,8 @@ copyright notices and license terms. -->
 <data>
     <xpath expr="/form/notebook/page[@id='api']" position="after">
         <page string="Seur" id="seur">
+            <label name="seur_offline"/>
+            <field name="seur_offline"/>
             <label name="seur_franchise"/>
             <field name="seur_franchise"/>
             <label name="seur_seurid"/>
@@ -29,6 +31,18 @@ copyright notices and license terms. -->
             <field name="seur_aviso_email"/>
             <label name="seur_aviso_sms"/>
             <field name="seur_aviso_sms"/>
+            <label name="seur_reference"/>
+            <field name="seur_reference"/>
+            <label name="seur_minimum_reference"/>
+            <field name="seur_minimum_reference"/>
+            <label name="seur_maximun_reference"/>
+            <field name="seur_maximun_reference"/>
+            <label name="seur_email"/>
+            <field name="seur_email"/>
+            <label name="seur_email_backup"/>
+            <field name="seur_email_backup"/>
+            <label name="seur_filename"/>
+            <field name="seur_filename"/>
         </page>
     </xpath>
 </data>
