@@ -3,6 +3,10 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 msgctxt "error:carrier.api.seur.offline:"
+msgid "Error SMTP connection. Try again."
+msgstr "Error connexión SMTP. Intente de nuevo."
+
+msgctxt "error:carrier.api.seur.offline:"
 msgid ""
 "Not found SMTP server. Configure a SMTP server related with Seur Offline!"
 msgstr ""
@@ -175,6 +179,58 @@ msgctxt "field:carrier.api.seur.offline.send.start,id:"
 msgid "ID"
 msgstr "ID"
 
+msgctxt "field:carrier.api.seur.zip,coddest_code:"
+msgid "CodDest Code"
+msgstr "CodDest Code"
+
+msgctxt "field:carrier.api.seur.zip,coddest_name:"
+msgid "CodDest Name"
+msgstr "CodDest Name"
+
+msgctxt "field:carrier.api.seur.zip,codpos_city:"
+msgid "CodPos City"
+msgstr "CodPos City"
+
+msgctxt "field:carrier.api.seur.zip,codpos_code:"
+msgid "CodPos Code"
+msgstr "CodPos Code"
+
+msgctxt "field:carrier.api.seur.zip,codpos_country:"
+msgid "CodPos Country"
+msgstr "CodPos Country"
+
+msgctxt "field:carrier.api.seur.zip,codpos_zip:"
+msgid "CodPos Zip"
+msgstr "CodPos Zip"
+
+msgctxt "field:carrier.api.seur.zip,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:carrier.api.seur.zip,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:carrier.api.seur.zip,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:carrier.api.seur.zip,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:carrier.api.seur.zip,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:carrier.api.seur.zip,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:carrier.api.seur.zip.load.start,id:"
+msgid "ID"
+msgstr "ID"
+
 msgctxt "help:carrier.api,seur_ccc:"
 msgid "Seur Account Code (ccc)"
 msgstr "Código cuenta Seur (ccc)"
@@ -239,14 +295,25 @@ msgctxt "model:carrier.api.seur.offline,name:"
 msgid "Carrier API Seur Offline"
 msgstr "API Seur Offline"
 
-#, fuzzy
 msgctxt "model:carrier.api.seur.offline.send.start,name:"
-msgid "Carrier API Seur Offile Send Start"
+msgid "Carrier API Seur Offline Send Start"
 msgstr "Inicio envío API Seur Offline"
+
+msgctxt "model:carrier.api.seur.zip,name:"
+msgid "Carrier API Seur Zip"
+msgstr "Códigos postales API Seur"
+
+msgctxt "model:carrier.api.seur.zip.load.start,name:"
+msgid "Load Carrier API Seur Zip Start"
+msgstr "Añadir códigos postales API Seur"
 
 msgctxt "model:ir.action,name:act_carrier_api_seur_offline_form"
 msgid "Carriers API Seur Offline"
 msgstr "API Seur Offline"
+
+msgctxt "model:ir.action,name:seur_zip_load_wizard"
+msgid "Load Seur codes"
+msgstr "Añadir códigos Seur"
 
 msgctxt "model:ir.action,name:wizard_carrier_api_seur_offline_send"
 msgid "Send Seur Offline"
@@ -300,6 +367,15 @@ msgctxt "view:carrier.api.seur.offline:"
 msgid "Carrier API Seur Offline"
 msgstr "API Seur Offline"
 
+msgctxt "view:carrier.api.seur.zip.load.start:"
+msgid "Load Seur codes"
+msgstr "Añadir códigos Seur"
+
+msgctxt "view:carrier.api.seur.zip.load.start:"
+msgid "This process will load all Seur codes in the database."
+msgstr ""
+"Este proceso añadirá los códigos postales de Seur en la base de datos."
+
 msgctxt "view:carrier.api:"
 msgid "Seur"
 msgstr "Seur"
@@ -311,6 +387,14 @@ msgstr "Cancelar"
 msgctxt "wizard_button:carrier.api.seur.offline.send,start,send:"
 msgid "Send"
 msgstr "Enviar"
+
+msgctxt "wizard_button:carrier.api.seur.zip.load,start,accept:"
+msgid "Accept"
+msgstr "Aceptar"
+
+msgctxt "wizard_button:carrier.api.seur.zip.load,start,end:"
+msgid "Cancel"
+msgstr "Cancelar"
 
 msgctxt "wizard_button:carrier.send.shipments,result,end:"
 msgid "Close"

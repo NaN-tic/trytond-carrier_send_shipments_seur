@@ -90,10 +90,6 @@ class ShipmentOut:
             ('codpos_zip', '=', warehouse_zip),
             ('codpos_country', '=', warehouse_country_code),
             ], limit=1)
-        seur_customer_zips = SeurZip.search([
-            ('codpos_zip', '=', customer_zip),
-            ('codpos_country', '=', customer_country_code),
-            ], limit=1)
 
         notes = '%(notes)s' \
             '%(name)s. %(street)s. %(zip)s %(city)s - %(country)s\n' % {
@@ -153,8 +149,7 @@ class ShipmentOut:
         #~ data['cliente_escalera'] = 'A'
         #~ data['cliente_piso'] = '3'
         #~ data['cliente_puerta'] = '2'
-        data['cliente_cpostal'] = seur_customer_zips[0].coddest_name \
-            if seur_customer_zips else customer_zip
+        data['cliente_cpostal'] = customer_zip
         data['cliente_poblacion'] = customer_city
         data['cliente_pais'] = customer_country_code
         if shipment.customer.email:

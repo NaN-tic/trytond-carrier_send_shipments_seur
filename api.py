@@ -166,6 +166,7 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
                 'Configure a SMTP server related with Seur Offline!',
             'smtp_seur_error':
                 'Wrong connection to SMTP server. Not send email.',
+            'error_smtp': 'Error SMTP connection. Try again.',
             })
 
     @staticmethod
@@ -203,9 +204,6 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
             ])
         if not seur_shipments:
             return
-
-        cls.write(seur_shipments, {'state': 'done'})
-        Transaction().cursor.commit()
 
         default_service = CarrierApi.get_default_carrier_service(api)
 
@@ -267,10 +265,10 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
             smtp_server = server.get_smtp_server()
             smtp_server.sendmail(from_, recipients, msg.as_string())
             smtp_server.quit()
+            cls.write(seur_shipments, {'state': 'done'})
             logger.info('Send Seur Offline: %s' % (filename))
         except:
-            # rollback to draft state
-            cls.write(seur_shipments, {'state': 'draft'})
+            cls.raise_user_error('error_smtp')
             logger.error('Send Seur Offline: %s' % (filename))
 
 
