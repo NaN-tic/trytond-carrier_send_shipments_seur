@@ -76,7 +76,8 @@ class ShipmentOut:
 
         data = {}
         data['servicio'] = str(service.code)
-        data['product'] = '2'
+        # international: service 77, product 70
+        data['product'] = '70' if service.code == '77' else '2'
         data['total_bultos'] = packages
         data['observaciones'] = notes
         data['referencia_expedicion'] = code
