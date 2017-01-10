@@ -111,8 +111,8 @@ class ShipmentOut:
             if seur_warehouse_zips else warehouse_city
 
         data['servicio'] = str(service.code)
-        # international: service 77, product 104
-        data['product'] = '104' if service.code == '77' else '2'
+        # international: service 77, product 70
+        data['product'] = '70' if service.code == '77' else '2'
         data['total_bultos'] = packages
         data['observaciones'] = notes
         data['referencia_expedicion'] = code
