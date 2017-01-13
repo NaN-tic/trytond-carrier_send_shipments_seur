@@ -358,7 +358,15 @@ class ShipmentOut:
         return references, labels, errors
 
     @classmethod
-    def print_labels_seur(self, api, shipments):
+    def print_labels_seur(cls, api, shipments):
+        'Print Seur Labels'
+        if api.seur_offline:
+            return cls.print_labels_seur_offline(api, shipments)
+        else:
+            return cls.print_labels_seur_api(api, shipments)
+
+    @classmethod
+    def print_labels_seur_api(cls, api, shipments):
         '''
         Get labels from shipments out from Seur
         Not available labels from Seur API. Not return labels
@@ -401,7 +409,7 @@ class ShipmentOut:
                         errors.append(message)
                         continue
 
-                data = self.seur_picking_data(api, shipment, service, price, api.weight)
+                data = cls.seur_picking_data(api, shipment, service, price, api.weight)
                 label = picking_api.label(data)
 
                 if label:
@@ -423,5 +431,60 @@ class ShipmentOut:
                     message = 'Not label %s shipment available from Seur.' % (shipment.code)
                     errors.append(message)
                     logger.error(message)
+
+        return labels
+
+    @classmethod
+    def print_labels_seur_offline(cls, api, shipments):
+        'Print Label Seur Offline'
+        pool = Pool()
+        ShipmentOut = pool.get('stock.shipment.out')
+        CarrierApi = pool.get('carrier.api')
+
+        tmpl = offline_loader.load('offline-label.zpl',
+            cls=genshi.template.text.NewTextTemplate)
+
+        dbname = Transaction().cursor.dbname
+        default_service = CarrierApi.get_default_carrier_service(api)
+
+        labels = []
+        for shipment in shipments:
+            price = None
+            if shipment.carrier_cashondelivery:
+                price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
+
+            service = shipment.carrier_service or shipment.carrier.service \
+                or default_service
+
+            vals = cls.seur_picking_data(api, shipment, service, price, api.weight)
+
+            if vals['clave_portes'] == 'D':
+                vals['clave_portes'] = 'P.Debidos'
+            else:
+                # clave_protes == F
+                vals['clave_portes'] = 'P.Pagados'
+
+            bulto = 1
+            for seur_reference in shipment.carrier_tracking_ref.split(','):
+                barcode = seurbarcode(
+                    from_zip=shipment.warehouse.address.zip,
+                    to_zip=vals['cliente_cpostal'],
+                    reference=seur_reference,
+                    transport=1) # TODO transport type is fixed to 1
+                vals['barcode'] = barcode
+                vals['barcode_compact'] = barcode.replace (' ', '')
+                vals['bulto'] = bulto
+                bulto += 1
+
+                zpl = tmpl.generate(**vals).render()
+                with tempfile.NamedTemporaryFile(
+                        prefix='%s-seur-%s-' % (dbname, seur_reference),
+                        suffix='.zpl', delete=False) as temp:
+                    temp.write(zpl.encode('utf-8'))
+
+                logger.info(
+                    'Generated tmp label %s' % (temp.name))
+                labels.append(temp.name)
+                temp.close()
 
         return labels
