@@ -126,6 +126,7 @@ class ShipmentOut:
         data['aviso_reparto'] = 'S' if api.seur_aviso_reparto else 'N'
         data['aviso_email'] = 'S' if api.seur_aviso_email else 'N'
         data['aviso_sms'] = 'S' if api.seur_aviso_sms else 'N'
+        data['id_mercancia'] = '400' # TODO fixed ID mercancia
         return data
 
     @classmethod
