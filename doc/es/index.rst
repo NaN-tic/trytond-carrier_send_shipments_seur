@@ -26,3 +26,7 @@ Los servicios de Seur son (código - nombre):
 * 019: NETEXPRESS
 * 077: CLASSIC
 * 083: SEUR 8:30
+
+Visualizador de etiquetas ZPL:
+
+ * http://labelary.com/viewer.html
