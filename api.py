@@ -211,6 +211,19 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
         for s in seur_shipments:
             shipment = s.shipment
 
+            if not shipment.warehouse.address:
+                logger.error('Add a warehouse address: %s' % (
+                    shipment.warehouse.rec_name))
+                continue
+
+            if not shipment.carrier_tracking_ref:
+                logger.error('It is missing the tracking ref in shipment "%s"' % (
+                    shipment.rec_name))
+                continue
+
+            from_zip = shipment.warehouse.address.zip
+            tracking_ref = shipment.carrier_tracking_ref.split(',')[0]
+
             price = None
             if shipment.carrier_cashondelivery:
                 price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
@@ -222,12 +235,13 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
                 api.weight)
 
             barcode = seurbarcode(
-                from_zip=shipment.warehouse.address.zip,
+                from_zip=from_zip,
                 to_zip=vals['cliente_cpostal'],
-                reference=shipment.carrier_tracking_ref,
+                reference=tracking_ref,
                 transport=1) # TODO transport type is fixed to 1
             vals['barcode'] = barcode
-
+            vals['barcode_compact'] = barcode.replace (' ', '')
+            # add shipment to send to seur
             shipments_data.append(vals)
 
         vals = {}
