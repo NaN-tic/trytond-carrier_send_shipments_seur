@@ -86,10 +86,21 @@ class ShipmentOut:
         customer_zip = shipment.delivery_address.zip
         customer_country_code = shipment.delivery_address.country.code
 
-        seur_warehouse_zips = SeurZip.search([
-            ('codpos_zip', '=', warehouse_zip),
-            ('codpos_country', '=', warehouse_country_code),
-            ], limit=1)
+        codpos_zips = set()
+        if warehouse_zip:
+            codpos_zips.add(warehouse_zip)
+        if customer_zip:
+            codpos_zips.add(customer_zip)
+        codpos_countries = set()
+        if warehouse_country_code:
+            codpos_countries.add(warehouse_country_code)
+        if customer_country_code:
+            codpos_countries.add(customer_country_code)
+
+        seur_zips = dict(((z.codpos_zip, z.codpos_country), z) for z in SeurZip.search([
+            ('codpos_zip', 'in', list(codpos_zips)),
+            ('codpos_country', 'in', list(codpos_countries)),
+            ]))
 
         notes = '%(notes)s' \
             '%(name)s. %(street)s. %(zip)s %(city)s - %(country)s\n' % {
@@ -105,10 +116,15 @@ class ShipmentOut:
         data['date'] = Date.today().strftime('%d/%m/%y')
         data['company_name'] = api.company.party.name
         data['company_street'] = warehouse_street
-        data['company_zip'] = seur_warehouse_zips[0].codpos_code \
-            if seur_warehouse_zips else warehouse_zip
-        data['company_city'] = seur_warehouse_zips[0].codpos_city \
-            if seur_warehouse_zips else warehouse_city
+
+        seur_company_zip = warehouse_zip
+        seur_company_city = warehouse_city
+        if seur_zips.get((warehouse_zip, warehouse_country_code)):
+            seur_zip = seur_zips[(warehouse_zip, warehouse_country_code)]
+            seur_company_zip = seur_zip.codpos_code
+            seur_company_city = seur_zip.codpos_city
+        data['company_zip'] = seur_company_zip
+        data['company_city'] = seur_company_city
 
         data['servicio'] = str(service.code)
         # international: service 77, product 70
@@ -149,9 +165,17 @@ class ShipmentOut:
         #~ data['cliente_escalera'] = 'A'
         #~ data['cliente_piso'] = '3'
         #~ data['cliente_puerta'] = '2'
-        data['cliente_cpostal'] = customer_zip
-        data['cliente_poblacion'] = customer_city
+
+        seur_customer_zip = customer_zip
+        seur_customer_city = customer_city
+        if seur_zips.get((customer_zip, customer_country_code)):
+            seur_zip = seur_zips[(customer_zip, customer_country_code)]
+            seur_customer_zip = seur_zip.codpos_code
+            seur_customer_city = seur_zip.codpos_city
+        data['cliente_cpostal'] = seur_customer_zip
+        data['cliente_poblacion'] = seur_customer_city
         data['cliente_pais'] = customer_country_code
+
         if shipment.customer.email:
             if shipment.delivery_address.email:
                 data['cliente_email'] = shipment.delivery_address.email
@@ -449,6 +473,8 @@ class ShipmentOut:
 
         labels = []
         for shipment in shipments:
+            from_zip = shipment.warehouse.address.zip
+
             price = None
             if shipment.carrier_cashondelivery:
                 price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
@@ -467,7 +493,7 @@ class ShipmentOut:
             bulto = 1
             for seur_reference in shipment.carrier_tracking_ref.split(','):
                 barcode = seurbarcode(
-                    from_zip=shipment.warehouse.address.zip,
+                    from_zip=from_zip,
                     to_zip=vals['cliente_cpostal'],
                     reference=seur_reference,
                     transport=1) # TODO transport type is fixed to 1

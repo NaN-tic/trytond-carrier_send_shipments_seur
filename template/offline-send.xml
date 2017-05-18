@@ -6,7 +6,7 @@
           <ci>${ci}</ci>
           <nif>${vat}</nif>
           <ccc>${ccc}</ccc>
-          <cod_barras>${s.barcode_compact}</cod_barras>
+          <cod_barras>${s.barcodes_compact[i]}</cod_barras>
           <servicio>${s.servicio}</servicio>
           <producto>${s.product}</producto>
           <total_bultos>${s.total_bultos}</total_bultos>

@@ -193,6 +193,7 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
         SMTP = pool.get('smtp.server')
         ShipmentOut = pool.get('stock.shipment.out')
         CarrierApi = pool.get('carrier.api')
+        SeurZip = pool.get('carrier.api.seur.zip')
 
         server = SMTP.get_smtp_server_from_model(cls.__name__)
         if not server:
@@ -211,18 +212,16 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
         for s in seur_shipments:
             shipment = s.shipment
 
-            if not shipment.warehouse.address:
-                logger.error('Add a warehouse address: %s' % (
-                    shipment.warehouse.rec_name))
-                continue
-
             if not shipment.carrier_tracking_ref:
                 logger.error('It is missing the tracking ref in shipment "%s"' % (
                     shipment.rec_name))
                 continue
 
-            from_zip = shipment.warehouse.address.zip
-            tracking_ref = shipment.carrier_tracking_ref.split(',')[0]
+            if shipment.warehouse.address:
+                waddress = shipment.warehouse.address
+            else:
+                waddress = api.company.party.addresses[0]
+            from_zip = waddress.zip
 
             price = None
             if shipment.carrier_cashondelivery:
@@ -234,13 +233,18 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
             vals = ShipmentOut.seur_picking_data(api, shipment, service, price,
                 api.weight)
 
-            barcode = seurbarcode(
-                from_zip=from_zip,
-                to_zip=vals['cliente_cpostal'],
-                reference=tracking_ref,
-                transport=1) # TODO transport type is fixed to 1
-            vals['barcode'] = barcode
-            vals['barcode_compact'] = barcode.replace (' ', '')
+            barcodes = []
+            barcodes_compact = []
+            for seur_reference in shipment.carrier_tracking_ref.split(','):
+                barcode = seurbarcode(
+                    from_zip=from_zip,
+                    to_zip=vals['cliente_cpostal'],
+                    reference=seur_reference,
+                    transport=1) # TODO transport type is fixed to 1
+                barcodes.append(barcode)
+                barcodes_compact.append(barcode.replace (' ', ''))
+            vals['barcodes'] = barcodes
+            vals['barcodes_compact'] = barcodes_compact
             # add shipment to send to seur
             shipments_data.append(vals)
 
