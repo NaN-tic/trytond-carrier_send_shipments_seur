@@ -58,9 +58,9 @@ class ShipmentOut:
         SeurZip = pool.get('carrier.api.seur.zip')
 
         if api.reference_origin and hasattr(shipment, 'origin'):
-            code = shipment.origin and shipment.origin.rec_name or shipment.code
+            code = shipment.origin and shipment.origin.rec_name or shipment.number
         else:
-            code = shipment.code
+            code = shipment.number
 
         notes = ''
         if shipment.carrier_notes:
@@ -213,7 +213,7 @@ class ShipmentOut:
         errors = []
 
         default_service = CarrierApi.get_default_carrier_service(api)
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
 
         seur_context = {}
         if api.seur_pdf:
@@ -256,10 +256,10 @@ class ShipmentOut:
                         'carrier_send_date': ShipmentOut.get_carrier_date(),
                         'carrier_send_employee': ShipmentOut.get_carrier_employee() or None,
                         })
-                    logger.info('Send shipment %s' % (shipment.code))
-                    references.append(shipment.code)
+                    logger.info('Send shipment %s' % (shipment.number))
+                    references.append(shipment.number)
                 else:
-                    logger.error('Not send shipment %s.' % (shipment.code))
+                    logger.error('Not send shipment %s.' % (shipment.number))
 
                 if label:
                     if api.seur_pdf:
@@ -306,7 +306,7 @@ class ShipmentOut:
         tmpl = offline_loader.load('offline-label.zpl',
             cls=genshi.template.text.NewTextTemplate)
 
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
         min_ref = api.seur_minimum_reference
         max_ref = api.seur_maximun_reference
         default_service = CarrierApi.get_default_carrier_service(api)
@@ -400,7 +400,7 @@ class ShipmentOut:
         ShipmentOut = pool.get('stock.shipment.out')
 
         default_service = CarrierApi.get_default_carrier_service(api)
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
 
         labels = []
         errors = []
@@ -413,13 +413,13 @@ class ShipmentOut:
             for shipment in shipments:
                 service = shipment.carrier_service or default_service
                 if not service:
-                    message = 'Add %s service or configure a default API Seur service.' % (shipment.code)
+                    message = 'Add %s service or configure a default API Seur service.' % (shipment.number)
                     errors.append(message)
                     logger.error(message)
                     continue
 
                 if not shipment.delivery_address.country:
-                    message = 'Add %s a country.' % (shipment.code)
+                    message = 'Add %s a country.' % (shipment.number)
                     errors.append(message)
                     logger.error(message)
                     continue
@@ -429,7 +429,7 @@ class ShipmentOut:
                     price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
                     if not price:
                         message = 'Shipment %s not have price and send ' \
-                                'cashondelivery' % (shipment.code)
+                                'cashondelivery' % (shipment.number)
                         errors.append(message)
                         continue
 
@@ -452,7 +452,7 @@ class ShipmentOut:
                     temp.close()
                     labels.append(temp.name)
                 else:
-                    message = 'Not label %s shipment available from Seur.' % (shipment.code)
+                    message = 'Not label %s shipment available from Seur.' % (shipment.number)
                     errors.append(message)
                     logger.error(message)
 
@@ -468,7 +468,7 @@ class ShipmentOut:
         tmpl = offline_loader.load('offline-label.zpl',
             cls=genshi.template.text.NewTextTemplate)
 
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
         default_service = CarrierApi.get_default_carrier_service(api)
 
         labels = []
