@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- This file is part of the carrier_send_shipments_seur module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<form string="Carrier API Seur Offline">
+    <image name="tryton-dialog-information" xexpand="0"
+        xfill="0"/>
+    <group col="1" id="offline">
+        <label
+            string="Send Seur Offline."
+            id="send"
+            yalign="0.0" xalign="0.0" xexpand="1"/>
+        <label string="Note that this operation may take a few minutes."
+            id="operation"
+            yalign="0.0" xalign="0.0" xexpand="1"/>
+    </group>
+    <label name="api"/>
+    <field name="api" widget="selection"/>
+</form>
