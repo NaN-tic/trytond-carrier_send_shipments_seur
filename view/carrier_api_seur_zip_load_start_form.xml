@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- This file is part of carrier_send_shipments_seur module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<form string="Load Seur codes">
+    <image name="tryton-dialog-information" xexpand="0"
+        xfill="0"/>
+    <label string="This process will load all Seur codes in the database."
+        id="load_seur_codes"
+        yalign="0.0" xalign="0.0" xexpand="1"/>
+    <newline/>
+</form>
