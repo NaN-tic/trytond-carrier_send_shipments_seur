@@ -6,6 +6,7 @@ import doctest
 import trytond.tests.test_tryton
 from trytond.tests.test_tryton import ModuleTestCase
 from trytond.tests.test_tryton import doctest_setup, doctest_teardown
+from trytond.tests.test_tryton import doctest_checker
 from trytond.modules.carrier_send_shipments_seur.tools import set_seur_reference, \
     seurbarcode
 
@@ -14,7 +15,7 @@ class CarrierSendShipmentsSeurTestCase(ModuleTestCase):
     'Test Carrier Send Shipments Seur module'
     module = 'carrier_send_shipments_seur'
 
-    def test0010seur_reference(self):
+    def seur_reference(self):
         'Seur Reference Offline'
         min_ref = 4900000
         max_ref = 4920999
@@ -28,7 +29,7 @@ class CarrierSendShipmentsSeurTestCase(ModuleTestCase):
         r = set_seur_reference(min_ref, max_ref, 4920100)
         self.assertEqual(r, 4906100)
 
-    def test0020seur_barcode(self):
+    def seur_barcode(self):
         'Seur Barcode'
         from_zip = '19005'
         to_zip = '23006'
@@ -42,5 +43,6 @@ def suite():
         CarrierSendShipmentsSeurTestCase))
     suite.addTests(doctest.DocFileSuite('scenario_carrier_send_shipments_seur.rst',
             setUp=doctest_setup, tearDown=doctest_teardown, encoding='utf-8',
+            checker=doctest_checker,
             optionflags=doctest.REPORT_ONLY_FIRST_FAILURE))
     return suite
