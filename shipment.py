@@ -78,7 +78,7 @@ class ShipmentOut:
         warehouse_street = waddress.street
         warehouse_city = unaccent(waddress.city)
         warehouse_zip = waddress.zip
-        warehouse_country_code = waddress.country.code
+        warehouse_country_code = waddress.country.code if waddress.country else None
 
         customer_name = shipment.delivery_address.name or shipment.customer.name
         customer_street = shipment.delivery_address.street

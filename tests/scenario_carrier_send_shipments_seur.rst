@@ -192,6 +192,7 @@ Add wareahouse address::
     >>> company_address.stret = 'Street'
     >>> company_address.zip = '08000'
     >>> company_address.city = 'Barcelona'
+    >>> company_address.country = country
     >>> company_address.save()
     >>> warehouse_loc.address = company_address
     >>> warehouse_loc.save()

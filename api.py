@@ -193,7 +193,6 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
         SMTP = pool.get('smtp.server')
         ShipmentOut = pool.get('stock.shipment.out')
         CarrierApi = pool.get('carrier.api')
-        SeurZip = pool.get('carrier.api.seur.zip')
 
         server = SMTP.get_smtp_server_from_model(cls.__name__)
         if not server:
