@@ -119,7 +119,7 @@ class ShipmentOut:
 
         seur_company_zip = warehouse_zip
         seur_company_city = warehouse_city
-        if seur_zips.get((warehouse_zip, warehouse_country_code)):
+        if api.seur_offline and seur_zips.get((warehouse_zip, warehouse_country_code)):
             seur_zip = seur_zips[(warehouse_zip, warehouse_country_code)]
             seur_company_zip = seur_zip.codpos_code
             seur_company_city = seur_zip.codpos_city
@@ -168,7 +168,7 @@ class ShipmentOut:
 
         seur_customer_zip = customer_zip
         seur_customer_city = customer_city
-        if seur_zips.get((customer_zip, customer_country_code)):
+        if api.seur_offline and seur_zips.get((customer_zip, customer_country_code)):
             seur_zip = seur_zips[(customer_zip, customer_country_code)]
             seur_customer_zip = seur_zip.codpos_code
             seur_customer_city = seur_zip.codpos_city
