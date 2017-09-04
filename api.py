@@ -335,7 +335,7 @@ class LoadCarrierApiSeurZip(Wizard):
     'Load Carrier API Seur Zip Start'
     __name__ = 'carrier.api.seur.zip.load'
 
-    start = StateView('load.banks.start',
+    start = StateView('carrier.api.seur.zip.load.start',
         'carrier_send_shipments_seur.carrier_api_seur_load_start_view_form', [
             Button('Cancel', 'end', 'tryton-cancel'),
             Button('Accept', 'accept', 'tryton-ok', default=True),
