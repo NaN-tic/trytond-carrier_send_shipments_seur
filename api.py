@@ -87,10 +87,10 @@ class CarrierApi:
             'required': Bool(Eval('seur_offline')),
         }, depends=['seur_offline'],
         help='Seur email, separated by comma')
-    seur_email_backup = fields.Char('Seur Backup Email', states={
+    seur_email_cc = fields.Char('Seur CC Email', states={
             'invisible': ~Bool(Eval('seur_offline')),
         }, depends=['seur_offline'],
-        help='Seur CC backup email')
+        help='Seur CC email, separated by comma')
     seur_filename = fields.Char('Seur Filename', states={
             'invisible': ~Bool(Eval('seur_offline')),
             'required': Bool(Eval('seur_offline')),
@@ -260,6 +260,8 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
 
         from_ = server.smtp_email
         recipients = api.seur_email.split(',')
+        if api.seur_email_cc:
+            recipients += api.seur_email_cc.split(',')
         filename = '%s_%s.txt' % (api.seur_filename, datetime.datetime.now().strftime("%d%m%Y%H%M"))
         subject = '%s - %s - %s' % (api.seur_seurid, api.seur_ccc, filename)
 
@@ -267,6 +269,8 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
         msg['Subject'] = Header(subject, 'utf-8')
         msg['From'] = from_
         msg['To'] = api.seur_email
+        if api.seur_email_cc:
+            msg['Cc'] = api.seur_email_cc
         msg['Reply-to'] = server.smtp_email
         # msg['Date']     = Utils.formatdate(localtime = 1)
         msg['Message-ID'] = Utils.make_msgid()
