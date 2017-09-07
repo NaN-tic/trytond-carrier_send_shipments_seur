@@ -39,8 +39,8 @@ copyright notices and license terms. -->
             <field name="seur_maximun_reference"/>
             <label name="seur_email"/>
             <field name="seur_email"/>
-            <label name="seur_email_backup"/>
-            <field name="seur_email_backup"/>
+            <label name="seur_email_cc"/>
+            <field name="seur_email_cc"/>
             <label name="seur_filename"/>
             <field name="seur_filename"/>
         </page>
