@@ -86,7 +86,7 @@ class CarrierApi:
             'invisible': ~Bool(Eval('seur_offline')),
             'required': Bool(Eval('seur_offline')),
         }, depends=['seur_offline'],
-        help='Seur TO email')
+        help='Seur email, separated by comma')
     seur_email_backup = fields.Char('Seur Backup Email', states={
             'invisible': ~Bool(Eval('seur_offline')),
         }, depends=['seur_offline'],
@@ -259,14 +259,14 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
         # https://bugs.tryton.org/issue3553
 
         from_ = server.smtp_email
-        recipients = [api.seur_email]
+        recipients = api.seur_email.split(',')
         filename = '%s_%s.txt' % (api.seur_filename, datetime.datetime.now().strftime("%d%m%Y%H%M"))
         subject = '%s - %s - %s' % (api.seur_seurid, api.seur_ccc, filename)
 
         msg = MIMEMultipart()
         msg['Subject'] = Header(subject, 'utf-8')
         msg['From'] = from_
-        msg['To'] = ', '.join(recipients)
+        msg['To'] = api.seur_email
         msg['Reply-to'] = server.smtp_email
         # msg['Date']     = Utils.formatdate(localtime = 1)
         msg['Message-ID'] = Utils.make_msgid()

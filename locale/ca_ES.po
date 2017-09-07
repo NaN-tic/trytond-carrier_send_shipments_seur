@@ -243,8 +243,8 @@ msgid "Seur ECB Code"
 msgstr "Codi ECB Seur"
 
 msgctxt "help:carrier.api,seur_email:"
-msgid "Seur TO email"
-msgstr "Correu destinatari Seur"
+msgid "Seur email, separated by comma"
+msgstr "Correu Seur, separado por coma"
 
 msgctxt "help:carrier.api,seur_email_backup:"
 msgid "Seur CC backup email"
