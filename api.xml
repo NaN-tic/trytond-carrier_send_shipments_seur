@@ -14,6 +14,10 @@ copyright notices and license terms. -->
             <field name="user" ref="user_carrier_api_seur"/>
             <field name="group" ref="carrier_api.group_carrier_api_admin"/>
         </record>
+        <record model="res.user-res.group" id="user_carrier_api_seur_stock_group">
+            <field name="user" ref="user_carrier_api_seur"/>
+            <field name="group" ref="stock.group_stock"/>
+        </record>
 
         <!--Carrier API -->
         <record model="ir.ui.view" id="carrier_api_form">
