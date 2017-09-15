@@ -166,13 +166,13 @@ class ShipmentOut:
         #~ data['cliente_piso'] = '3'
         #~ data['cliente_puerta'] = '2'
 
-        seur_customer_zip = customer_zip
+        # seur_customer_zip = customer_zip
         seur_customer_city = customer_city
         if api.seur_offline and seur_zips.get((customer_zip, customer_country_code)):
             seur_zip = seur_zips[(customer_zip, customer_country_code)]
-            seur_customer_zip = seur_zip.codpos_code
+            # seur_customer_zip = seur_zip.codpos_code
             seur_customer_city = seur_zip.codpos_city
-        data['cliente_cpostal'] = seur_customer_zip
+        data['cliente_cpostal'] = customer_zip
         data['cliente_poblacion'] = seur_customer_city
         data['cliente_pais'] = customer_country_code
 
