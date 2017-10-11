@@ -173,8 +173,8 @@ class ShipmentOut:
             # seur_customer_zip = seur_zip.codpos_code
             seur_customer_city = seur_zip.codpos_city
         data['cliente_cpostal'] = customer_zip
-        data['cliente_poblacion'] = seur_customer_city
-        data['cliente_pais'] = customer_country_code
+        data['cliente_poblacion'] = unaccent(seur_customer_city)
+        data['cliente_pais'] = unaccent(customer_country_code)
 
         if shipment.customer.email:
             if shipment.delivery_address.email:
@@ -245,6 +245,8 @@ class ShipmentOut:
                         continue
 
                 data = cls.seur_picking_data(api, shipment, service, price, api.weight)
+                # Send shipment data to carrier
+                logger.info('Send SEUR API data: %s' % data)
                 reference, label, error = picking_api.create(data)
 
                 if reference:
