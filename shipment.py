@@ -166,15 +166,21 @@ class ShipmentOut:
         #~ data['cliente_piso'] = '3'
         #~ data['cliente_puerta'] = '2'
 
-        # seur_customer_zip = customer_zip
+        seur_customer_zip = customer_zip
         seur_customer_city = customer_city
+        seur_coddest_name = customer_city
         if api.seur_offline and seur_zips.get((customer_zip, customer_country_code)):
             seur_zip = seur_zips[(customer_zip, customer_country_code)]
-            # seur_customer_zip = seur_zip.codpos_code
+            seur_customer_zip = seur_zip.codpos_code
             seur_customer_city = seur_zip.codpos_city
+            seur_coddest_name = seur_zip.coddest_name
+
         data['cliente_cpostal'] = customer_zip
         data['cliente_poblacion'] = unaccent(seur_customer_city)
         data['cliente_pais'] = unaccent(customer_country_code)
+        # offline
+        data['seur_coddest_name'] = unaccent(seur_coddest_name)
+        data['seur_codpos_code'] = seur_customer_zip
 
         if shipment.customer.email:
             if shipment.delivery_address.email:
@@ -347,7 +353,7 @@ class ShipmentOut:
 
                 barcode = seurbarcode(
                     from_zip=shipment.warehouse.address.zip,
-                    to_zip=vals['cliente_cpostal'],
+                    to_zip=vals['seur_codpos_code'],
                     reference=seur_reference,
                     transport=1) # TODO transport type is fixed to 1
                 vals['barcode'] = barcode
@@ -496,7 +502,7 @@ class ShipmentOut:
             for seur_reference in shipment.carrier_tracking_ref.split(','):
                 barcode = seurbarcode(
                     from_zip=from_zip,
-                    to_zip=vals['cliente_cpostal'],
+                    to_zip=vals['seur_codpos_code'],
                     reference=seur_reference,
                     transport=1) # TODO transport type is fixed to 1
                 vals['barcode'] = barcode
