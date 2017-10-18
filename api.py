@@ -237,7 +237,7 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
             for seur_reference in shipment.carrier_tracking_ref.split(','):
                 barcode = seurbarcode(
                     from_zip=from_zip,
-                    to_zip=vals['cliente_cpostal'],
+                    to_zip=vals['seur_codpos_code'],
                     reference=seur_reference,
                     transport=1) # TODO transport type is fixed to 1
                 barcodes.append(barcode)
