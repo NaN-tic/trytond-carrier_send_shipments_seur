@@ -64,7 +64,7 @@ class ShipmentOut:
 
         notes = ''
         if shipment.carrier_notes:
-            notes = '%s\n' % shipment.carrier_notes
+            notes = '%s\n' % unaccent(shipment.carrier_notes)
 
         packages = shipment.number_packages
         if not packages or packages == 0:
@@ -75,15 +75,16 @@ class ShipmentOut:
         else:
             waddress = api.company.party.addresses[0]
 
-        warehouse_street = waddress.street
+        warehouse_street = unaccent(waddress.street)
         warehouse_city = unaccent(waddress.city)
-        warehouse_zip = waddress.zip
+        warehouse_zip = unaccent(waddress.zip)
         warehouse_country_code = waddress.country.code if waddress.country else None
 
-        customer_name = shipment.delivery_address.name or shipment.customer.name
-        customer_street = shipment.delivery_address.street
+        customer_name = unaccent(shipment.delivery_address.name
+            or shipment.customer.name)
+        customer_street = unaccent(shipment.delivery_address.street)
         customer_city = unaccent(shipment.delivery_address.city)
-        customer_zip = shipment.delivery_address.zip
+        customer_zip = unaccent(shipment.delivery_address.zip)
         customer_country_code = shipment.delivery_address.country.code
 
         codpos_zips = set()
@@ -104,17 +105,17 @@ class ShipmentOut:
 
         notes = '%(notes)s' \
             '%(name)s. %(street)s. %(zip)s %(city)s - %(country)s\n' % {
-                'notes': unaccent(notes),
-                'name': unaccent(customer_name),
-                'street': unaccent(customer_street),
+                'notes': notes,
+                'name': customer_name,
+                'street': customer_street,
                 'zip': customer_zip,
-                'city': unaccent(customer_city),
+                'city': customer_city,
                 'country': customer_country_code,
                 }
 
         data = {}
         data['date'] = Date.today().strftime('%d/%m/%y')
-        data['company_name'] = api.company.party.name
+        data['company_name'] = unaccent(api.company.party.name)
         data['company_street'] = warehouse_street
 
         seur_company_zip = warehouse_zip
@@ -157,8 +158,8 @@ class ShipmentOut:
         data['total_kilos'] = str(sweight)
         data['peso_bulto'] = str(sweight)
 
-        data['cliente_nombre'] = unaccent(customer_name)
-        data['cliente_direccion'] = unaccent(customer_street)
+        data['cliente_nombre'] = customer_name
+        data['cliente_direccion'] = customer_street
         #~ data['cliente_tipovia'] = 'CL'
         #~ data['cliente_tnumvia'] = 'N'
         #~ data['cliente_numvia'] = '93'
@@ -176,10 +177,10 @@ class ShipmentOut:
             seur_coddest_name = seur_zip.coddest_name
 
         data['cliente_cpostal'] = customer_zip
-        data['cliente_poblacion'] = unaccent(seur_customer_city)
-        data['cliente_pais'] = unaccent(customer_country_code)
+        data['cliente_poblacion'] = seur_customer_city
+        data['cliente_pais'] = customer_country_code
         # offline
-        data['seur_coddest_name'] = unaccent(seur_coddest_name)
+        data['seur_coddest_name'] = seur_coddest_name
         data['seur_codpos_code'] = seur_customer_zip
 
         if shipment.customer.email:
@@ -191,7 +192,7 @@ class ShipmentOut:
             shipment.get_phone_shipment_out(shipment))
         data['sms_consignatario'] = unspaces(
             shipment.get_phone_shipment_out(shipment, phone=False))
-        data['cliente_atencion'] = unaccent(customer_name)
+        data['cliente_atencion'] = customer_name
         data['aviso_preaviso'] = 'S' if api.seur_aviso_preaviso else 'N'
         data['aviso_reparto'] = 'S' if api.seur_aviso_reparto else 'N'
         data['aviso_email'] = 'S' if api.seur_aviso_email else 'N'
