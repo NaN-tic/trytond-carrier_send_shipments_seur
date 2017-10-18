@@ -342,6 +342,8 @@ class ShipmentOut:
             else:
                 # clave_protes == F
                 vals['clave_portes'] = 'P.Pagados'
+            if vals['clave_reembolso'] == 'F':
+                vals['clave_reembolso'] = 'R'
 
             seur_references = []
             for i in range(0, vals['total_bultos']):
@@ -498,6 +500,8 @@ class ShipmentOut:
             else:
                 # clave_protes == F
                 vals['clave_portes'] = 'P.Pagados'
+            if vals['clave_reembolso'] == 'F':
+                vals['clave_reembolso'] = 'R'
 
             bulto = 1
             for seur_reference in shipment.carrier_tracking_ref.split(','):
