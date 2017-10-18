@@ -83,7 +83,7 @@
 ^FN3^FD${company_city}^FS
 ^FN4^FD${cliente_poblacion}^FS
 ^FN5^FD${seur_coddest_name}^FS
-^FN6^FDR^FS
+^FN6^FD${clave_reembolso}^FS
 ^FN7^FD ^FS
 ^FN8^FD ^FS
 ^FN9^FD ^FS
