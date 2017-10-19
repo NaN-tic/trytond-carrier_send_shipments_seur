@@ -262,8 +262,8 @@ class ShipmentOut:
                         'carrier_service': service,
                         'carrier_delivery': True,
                         'carrier_printed': True,
-                        'carrier_send_date': ShipmentOut.get_carrier_date(),
-                        'carrier_send_employee': ShipmentOut.get_carrier_employee() or None,
+                        'carrier_send_date': cls.get_carrier_date(),
+                        'carrier_send_employee': cls.get_carrier_employee(),
                         })
                     logger.info('Send shipment %s' % (shipment.code))
                     references.append(shipment.code)
@@ -379,13 +379,18 @@ class ShipmentOut:
                 'shipment': shipment,
                 'state': 'draft',
                 })
+
             to_write.extend(([shipment], {
                 'carrier_tracking_ref': ','.join(seur_references),
+                'carrier_delivery': True,
+                'carrier_printed': True,
+                'carrier_send_date': cls.get_carrier_date(),
+                'carrier_send_employee': cls.get_carrier_employee(),
                 }))
             references.extend(seur_references)
 
         if to_write:
-            ShipmentOut.write(*to_write)
+            cls.write(*to_write)
         if to_create:
             with Transaction().set_user(0):
                 SeurOffline.create(to_create)
