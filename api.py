@@ -282,15 +282,12 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
             'attachment; filename="%s"' % filename)
         msg.attach(attach)
 
-        try:
-            smtp_server = server.get_smtp_server()
-            smtp_server.sendmail(from_, recipients, msg.as_string())
-            smtp_server.quit()
-            cls.write(seur_shipments, {'state': 'done'})
-            logger.info('Send Seur Offline: %s' % (filename))
-        except:
-            cls.raise_user_error('error_smtp')
-            logger.error('Send Seur Offline: %s' % (filename))
+        cls.write(seur_shipments, {'state': 'done'})
+
+        smtp_server = server.get_smtp_server()
+        smtp_server.sendmail(from_, recipients, msg.as_string())
+        smtp_server.quit()
+        logger.info('Send Seur Offline: %s' % (filename))
 
 
 class CarrierApiSeurOfflineSendStart(ModelView):
