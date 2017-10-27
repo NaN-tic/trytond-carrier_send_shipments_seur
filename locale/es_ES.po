@@ -51,10 +51,6 @@ msgstr ""
 "La secuenda de la referencia de Seur no es un entero. Por favor, revise la "
 "secuencia."
 
-msgctxt "error:stock.shipment.out:"
-msgid "Shipment \"%(name)s\" not have price and send cashondelivery"
-msgstr "El albarán \"%(name)s\" no dispone de precio y contrarembolso."
-
 msgctxt "field:carrier.api,seur_aviso_email:"
 msgid "Aviso Email"
 msgstr "Aviso Email"
