@@ -297,7 +297,6 @@ class ShipmentOut:
         'Send Seur Offline'
         pool = Pool()
         SeurOffline = pool.get('carrier.api.seur.offline')
-        ShipmentOut = pool.get('stock.shipment.out')
         Sequence = pool.get('ir.sequence')
         CarrierApi = pool.get('carrier.api')
 
@@ -321,7 +320,7 @@ class ShipmentOut:
         for shipment in shipments:
             price = None
             if shipment.carrier_cashondelivery:
-                price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
+                price = shipment.carrier_cashondelivery_price
 
             service = shipment.carrier_service or shipment.carrier.service \
                 or default_service
@@ -402,9 +401,7 @@ class ShipmentOut:
         Get labels from shipments out from Seur
         Not available labels from Seur API. Not return labels
         '''
-        pool = Pool()
-        CarrierApi = pool.get('carrier.api')
-        ShipmentOut = pool.get('stock.shipment.out')
+        CarrierApi = Pool().get('carrier.api')
 
         default_service = CarrierApi.get_default_carrier_service(api)
         dbname = Transaction().cursor.dbname
@@ -433,12 +430,7 @@ class ShipmentOut:
 
                 price = None
                 if shipment.carrier_cashondelivery:
-                    price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
-                    if not price:
-                        message = 'Shipment %s not have price and send ' \
-                                'cashondelivery' % (shipment.code)
-                        errors.append(message)
-                        continue
+                    price = shipment.carrier_cashondelivery_price
 
                 data = cls.seur_picking_data(api, shipment, service, price, api.weight)
                 label = picking_api.label(data)
@@ -468,9 +460,7 @@ class ShipmentOut:
     @classmethod
     def print_labels_seur_offline(cls, api, shipments):
         'Print Label Seur Offline'
-        pool = Pool()
-        ShipmentOut = pool.get('stock.shipment.out')
-        CarrierApi = pool.get('carrier.api')
+        CarrierApi = Pool().get('carrier.api')
 
         tmpl = offline_loader.load('offline-label.zpl',
             cls=genshi.template.text.NewTextTemplate)
@@ -484,7 +474,7 @@ class ShipmentOut:
 
             price = None
             if shipment.carrier_cashondelivery:
-                price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
+                price = shipment.carrier_cashondelivery_price
 
             service = shipment.carrier_service or shipment.carrier.service \
                 or default_service
