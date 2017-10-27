@@ -56,9 +56,9 @@ class ShipmentOut:
         SeurZip = pool.get('carrier.api.seur.zip')
 
         if api.reference_origin and hasattr(shipment, 'origin'):
-            code = shipment.origin and shipment.origin.rec_name or shipment.number
+            code = shipment.origin and shipment.origin.rec_name or shipment.code
         else:
-            code = shipment.number
+            code = shipment.code
 
         notes = ''
         if shipment.carrier_notes:
@@ -256,10 +256,10 @@ class ShipmentOut:
                         'carrier_send_date': cls.get_carrier_date(),
                         'carrier_send_employee': cls.get_carrier_employee(),
                         })
-                    logger.info('Send shipment %s' % (shipment.number))
-                    references.append(shipment.number)
+                    logger.info('Send shipment %s' % (shipment.code))
+                    references.append(shipment.code)
                 else:
-                    logger.error('Not send shipment %s.' % (shipment.number))
+                    logger.error('Not send shipment %s.' % (shipment.code))
 
                 if label:
                     if api.seur_pdf:
@@ -297,7 +297,6 @@ class ShipmentOut:
         'Send Seur Offline'
         pool = Pool()
         SeurOffline = pool.get('carrier.api.seur.offline')
-        ShipmentOut = pool.get('stock.shipment.out')
         Sequence = pool.get('ir.sequence')
         CarrierApi = pool.get('carrier.api')
 
@@ -321,7 +320,7 @@ class ShipmentOut:
         for shipment in shipments:
             price = None
             if shipment.carrier_cashondelivery:
-                price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
+                price = shipment.carrier_cashondelivery_price
 
             service = shipment.carrier_service or shipment.carrier.service \
                 or default_service
@@ -402,9 +401,7 @@ class ShipmentOut:
         Get labels from shipments out from Seur
         Not available labels from Seur API. Not return labels
         '''
-        pool = Pool()
-        CarrierApi = pool.get('carrier.api')
-        ShipmentOut = pool.get('stock.shipment.out')
+        CarrierApi = Pool().get('carrier.api')
 
         default_service = CarrierApi.get_default_carrier_service(api)
         dbname = Transaction().database.name
@@ -420,25 +417,20 @@ class ShipmentOut:
             for shipment in shipments:
                 service = shipment.carrier_service or default_service
                 if not service:
-                    message = 'Add %s service or configure a default API Seur service.' % (shipment.number)
+                    message = 'Add %s service or configure a default API Seur service.' % (shipment.code)
                     errors.append(message)
                     logger.error(message)
                     continue
 
                 if not shipment.delivery_address.country:
-                    message = 'Add %s a country.' % (shipment.number)
+                    message = 'Add %s a country.' % (shipment.code)
                     errors.append(message)
                     logger.error(message)
                     continue
 
                 price = None
                 if shipment.carrier_cashondelivery:
-                    price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
-                    if not price:
-                        message = 'Shipment %s not have price and send ' \
-                                'cashondelivery' % (shipment.number)
-                        errors.append(message)
-                        continue
+                    price = shipment.carrier_cashondelivery_price
 
                 data = cls.seur_picking_data(api, shipment, service, price, api.weight)
                 label = picking_api.label(data)
@@ -459,7 +451,7 @@ class ShipmentOut:
                     temp.close()
                     labels.append(temp.name)
                 else:
-                    message = 'Not label %s shipment available from Seur.' % (shipment.number)
+                    message = 'Not label %s shipment available from Seur.' % (shipment.code)
                     errors.append(message)
                     logger.error(message)
 
@@ -468,9 +460,7 @@ class ShipmentOut:
     @classmethod
     def print_labels_seur_offline(cls, api, shipments):
         'Print Label Seur Offline'
-        pool = Pool()
-        ShipmentOut = pool.get('stock.shipment.out')
-        CarrierApi = pool.get('carrier.api')
+        CarrierApi = Pool().get('carrier.api')
 
         tmpl = offline_loader.load('offline-label.zpl',
             cls=genshi.template.text.NewTextTemplate)
@@ -484,7 +474,7 @@ class ShipmentOut:
 
             price = None
             if shipment.carrier_cashondelivery:
-                price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
+                price = shipment.carrier_cashondelivery_price
 
             service = shipment.carrier_service or shipment.carrier.service \
                 or default_service
