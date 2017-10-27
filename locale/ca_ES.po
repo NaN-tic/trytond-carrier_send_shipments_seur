@@ -50,10 +50,6 @@ msgctxt "error:stock.shipment.out:"
 msgid "Seur reference is not an integer. Please, check the seur sequence"
 msgstr "La referència de Seur no és un enter. Revisi la configuració de Seur"
 
-msgctxt "error:stock.shipment.out:"
-msgid "Shipment \"%(name)s\" not have price and send cashondelivery"
-msgstr "L'albarà \"%(name)s\" no diposa de preus i contrarembolsament."
-
 msgctxt "field:carrier.api,seur_aviso_email:"
 msgid "Aviso Email"
 msgstr "Aviso Email"
