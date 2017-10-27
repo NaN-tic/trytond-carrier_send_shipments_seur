@@ -31,8 +31,6 @@ class ShipmentOut:
         cls._error_messages.update({
             'seur_add_services': 'Select a service or default service in Seur API',
             'seur_not_country': 'Add country in shipment "%(name)s" delivery address',
-            'seur_not_price': 'Shipment "%(name)s" not have price and send '
-                'cashondelivery',
             'seur_error_zip': 'Seur not accept zip "%(zip)s"',
             'seur_not_send': 'Not send shipment "%(name)s"',
             'seur_not_send_error': 'Not send shipment "%(name)s". %(error)s',
@@ -212,9 +210,7 @@ class ShipmentOut:
     @classmethod
     def send_seur_api(cls, api, shipments):
         'Send shipments out to seur'
-        pool = Pool()
-        CarrierApi = pool.get('carrier.api')
-        ShipmentOut = pool.get('stock.shipment.out')
+        CarrierApi = Pool().get('carrier.api')
 
         references = []
         labels = []
@@ -244,13 +240,7 @@ class ShipmentOut:
 
                 price = None
                 if shipment.carrier_cashondelivery:
-                    price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
-                    if not price:
-                        message = cls.raise_user_error('seur_not_price', {
-                                'name': shipment.rec_name,
-                                }, raise_exception=False)
-                        errors.append(message)
-                        continue
+                    price = shipment.carrier_cashondelivery_price
 
                 data = cls.seur_picking_data(api, shipment, service, price, api.weight)
                 # Send shipment data to carrier
