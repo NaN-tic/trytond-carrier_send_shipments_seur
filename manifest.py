@@ -14,7 +14,7 @@ class CarrierManifest:
     __name__ = 'carrier.manifest'
 
     def get_manifest_seur(self, api, from_date, to_date):
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
 
         context = {}
         with Picking(api.username, api.password, api.vat, api.seur_franchise,
