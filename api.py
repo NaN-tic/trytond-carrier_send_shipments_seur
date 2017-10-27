@@ -224,7 +224,7 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
 
             price = None
             if shipment.carrier_cashondelivery:
-                price = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
+                price = shipment.carrier_cashondelivery_price
 
             service = shipment.carrier_service or shipment.carrier.service \
                 or default_service
