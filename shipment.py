@@ -101,6 +101,7 @@ class ShipmentOut:
         seur_zips = dict(((z.codpos_zip, z.codpos_country), z) for z in SeurZip.search([
             ('codpos_zip', 'in', list(codpos_zips)),
             ('codpos_country', 'in', list(codpos_countries)),
+            ('coddest_name', '!=', None),
             ]))
 
         notes = '%(notes)s' \
