@@ -201,6 +201,7 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
         seur_shipments = cls.search([
             ('api', '=', api),
             ('state', '=', 'draft'),
+            ('shipment.state', 'in', ['packed', 'done']),
             ])
         if not seur_shipments:
             return
