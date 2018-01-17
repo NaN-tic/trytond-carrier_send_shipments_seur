@@ -157,7 +157,7 @@ msgstr "Albarán"
 
 msgctxt "field:carrier.api.seur.offline,shipment_state:"
 msgid "Shipment State"
-msgstr "Estado envío"
+msgstr "Estado albarán"
 
 msgctxt "field:carrier.api.seur.offline,state:"
 msgid "State"
