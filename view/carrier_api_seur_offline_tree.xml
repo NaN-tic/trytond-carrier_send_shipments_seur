@@ -6,5 +6,6 @@ copyright notices and license terms. -->
     <field name="api"/>
     <field name="shipment"/>
     <field name="state"/>
+    <field name="shipment_state"/>
     <field name="company"/>
 </tree>
