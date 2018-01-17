@@ -155,6 +155,10 @@ msgctxt "field:carrier.api.seur.offline,shipment:"
 msgid "Shipment"
 msgstr "Albarán"
 
+msgctxt "field:carrier.api.seur.offline,shipment_state:"
+msgid "Shipment State"
+msgstr "Estado envío"
+
 msgctxt "field:carrier.api.seur.offline,state:"
 msgid "State"
 msgstr "Estado"
@@ -338,6 +342,34 @@ msgstr "Enviar Seur Offline"
 msgctxt "model:res.user,name:user_carrier_api_seur"
 msgid "Cron Carrier API Seur"
 msgstr "Cron API Seur Offline"
+
+msgctxt "selection:carrier.api.seur.offline,shipment_state:"
+msgid ""
+msgstr ""
+
+msgctxt "selection:carrier.api.seur.offline,shipment_state:"
+msgid "Assigned"
+msgstr "Reservado"
+
+msgctxt "selection:carrier.api.seur.offline,shipment_state:"
+msgid "Canceled"
+msgstr "Cancelado"
+
+msgctxt "selection:carrier.api.seur.offline,shipment_state:"
+msgid "Done"
+msgstr "Realizado"
+
+msgctxt "selection:carrier.api.seur.offline,shipment_state:"
+msgid "Draft"
+msgstr "Borrador"
+
+msgctxt "selection:carrier.api.seur.offline,shipment_state:"
+msgid "Packed"
+msgstr "Empaquetado"
+
+msgctxt "selection:carrier.api.seur.offline,shipment_state:"
+msgid "Waiting"
+msgstr "En espera"
 
 msgctxt "selection:carrier.api.seur.offline,state:"
 msgid "Done"
