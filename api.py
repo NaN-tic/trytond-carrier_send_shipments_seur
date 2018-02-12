@@ -249,8 +249,9 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
             if shipment.carrier_cashondelivery:
                 price = shipment.carrier_cashondelivery_price
 
-            service = shipment.carrier_service or shipment.carrier.service \
-                or default_service
+            service = (shipment.carrier_service or
+                (shipment.carrier and shipment.carrier.service)
+                or default_service)
 
             vals = ShipmentOut.seur_picking_data(api, shipment, service, price,
                 api.weight)
