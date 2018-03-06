@@ -398,8 +398,7 @@ class ShipmentOut:
     @classmethod
     def print_labels_seur_api(cls, api, shipments):
         '''
-        Get labels from shipments out from Seur
-        Not available labels from Seur API. Not return labels
+        Get Seur labels from Shipment Out
         '''
         CarrierApi = Pool().get('carrier.api')
 
