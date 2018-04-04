@@ -399,6 +399,8 @@ class LoadCarrierApiSeurZip(Wizard):
                     'codpos_country': u'%s' % line[32:34],
                     'codpos_code': codpos_code,
                     }
+                if vals['codpos_country'] in ['PT']:
+                    vals['codpos_zip'] = vals['codpos_zip'][1:]
                 if codpos_code in codpos:
                     codpos[codpos_code].append(vals)
                 else:
