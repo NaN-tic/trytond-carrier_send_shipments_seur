@@ -129,8 +129,6 @@ class ShipmentOut:
         data['company_city'] = seur_company_city
 
         data['servicio'] = str(service.code)
-        # international: service 77, product 70
-        data['product'] = '70' if service.code == '77' else '2'
         data['total_bultos'] = packages
         data['observaciones'] = notes
         data['referencia_expedicion'] = code
@@ -182,7 +180,18 @@ class ShipmentOut:
         data['cliente_pais'] = customer_country_code
         # offline
         data['seur_coddest_name'] = seur_coddest_name
-        data['seur_codpos_code'] = seur_customer_zip
+
+        # Service code 77 means international
+        if service.code == '77':
+            data['seur_codpos_code'] = '89'
+            data['product'] = '70'
+            data['product_short_name'] = 'INTE'
+            data['service_short_name'] = '*CLSC'
+        else:
+            data['seur_codpos_code'] = seur_customer_zip
+            data['product'] = '2'
+            data['product_short_name'] = 'ESTD'
+            data['service_short_name'] = '*B2C'
 
         if shipment.customer.email:
             if shipment.delivery_address.email:
