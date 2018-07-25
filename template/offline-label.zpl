@@ -78,7 +78,7 @@
 ^FT465,865^ADB,18,10^FN36^FA35^FS
 ^XZ
 ^XA^XFSEURCPT1.001^FS
-^FN1^FD*B2C/ESTD^FS
+^FN1^FD${service_short_name}/${product_short_name}^FS
 ^FN2^FD${date}^FS
 ^FN3^FD${company_city}^FS
 ^FN4^FD${cliente_poblacion}^FS
