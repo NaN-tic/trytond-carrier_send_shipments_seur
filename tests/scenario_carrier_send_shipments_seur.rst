@@ -149,6 +149,7 @@ Create API Carrier and services::
     >>> Sequence = Model.get('ir.sequence')
     >>> sequence, = Sequence.find([('code', '=', 'carrier.api.seur')])
     >>> carrier_api = CarrierAPI()
+    >>> carrier_api.name = 'Seur'
     >>> carrier_api.method = 'seur'
     >>> carrier_api.carriers.append(carrier_seur)
     >>> carrier_api.vat = '123456'
