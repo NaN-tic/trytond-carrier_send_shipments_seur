@@ -30,3 +30,7 @@ Los servicios de Seur son (código - nombre):
 Visualizador de etiquetas ZPL:
 
  * http://labelary.com/viewer.html
+
+Conversión de "Maestros" a UTF-8:
+
+ ./seur_codzip.sh
