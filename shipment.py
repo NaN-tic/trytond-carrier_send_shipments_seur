@@ -183,7 +183,7 @@ class ShipmentOut:
 
         # Service code 77 means international
         if service.code == '77':
-            data['seur_codpos_code'] = '89'
+            data['seur_codpos_code'] = '890'
             data['product'] = '70'
             data['product_short_name'] = 'INTE'
             data['service_short_name'] = '*CLSC'
