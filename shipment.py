@@ -193,15 +193,9 @@ class ShipmentOut:
             data['product_short_name'] = 'ESTD'
             data['service_short_name'] = '*B2C'
 
-        if shipment.customer.email:
-            if shipment.delivery_address.email:
-                data['cliente_email'] = shipment.delivery_address.email
-            else:
-                data['cliente_email'] = shipment.customer.email
-        data['cliente_telefono'] = unspaces(
-            shipment.get_phone_shipment_out(shipment))
-        data['sms_consignatario'] = unspaces(
-            shipment.get_phone_shipment_out(shipment, phone=False))
+        data['cliente_email'] = unspaces(shipment.email)
+        data['cliente_telefono'] = unspaces(shipment.phone)
+        data['sms_consignatario'] = unspaces(shipment.mobile)
         data['cliente_atencion'] = customer_name
         data['aviso_preaviso'] = 'S' if api.seur_aviso_preaviso else 'N'
         data['aviso_reparto'] = 'S' if api.seur_aviso_reparto else 'N'
