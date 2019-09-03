@@ -277,7 +277,7 @@ class CarrierApiSeurOffline(ModelSQL, ModelView):
         vals['ccc'] = api.seur_ccc
         vals['shipments'] = shipments_data
         tmpl = offline_loader.load('offline-send.xml')
-        xml = tmpl.generate(**vals).render()
+        xml = tmpl.generate(**vals).render(encoding='iso-8859-1')
 
         # TODO two-phase commit protocol
         # https://bugs.tryton.org/issue3553
