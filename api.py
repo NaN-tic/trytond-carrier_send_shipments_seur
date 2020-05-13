@@ -394,13 +394,14 @@ class LoadCarrierApiSeurZip(Wizard):
             for line in f:
                 codpos_code = u'%s' % line[35:38]
                 vals = {
-                    'codpos_zip': u'%s' % line[2:7],
                     'codpos_city': u'%s' % line[7:32].rstrip(),
                     'codpos_country': u'%s' % line[32:34],
                     'codpos_code': codpos_code,
                     }
+                if vals['codpos_country'] in ['ES']:
+                    vals['codpos_zip'] = u'%s' % line[2:7]
                 if vals['codpos_country'] in ['PT']:
-                    vals['codpos_zip'] = vals['codpos_zip'][1:]
+                    vals['codpos_zip'] = u'%s' % line[0:7]
                 if codpos_code in codpos:
                     codpos[codpos_code].append(vals)
                 else:
