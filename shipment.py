@@ -90,7 +90,7 @@ class ShipmentOut:
             codpos_zips.add(warehouse_zip)
         if customer_zip:
             if customer_country_code in ['PT']:
-                customer_zip = customer_zip.split("-")[0]
+                customer_zip = customer_zip.replace('-','')
             codpos_zips.add(customer_zip)
         codpos_countries = set()
         if warehouse_country_code:
